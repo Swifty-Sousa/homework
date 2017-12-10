@@ -61,6 +61,7 @@ def calculate_average_rating(rdict):
 
 
 def lookup_average_rating(index, book_dict,arlist):
+    #print arlist
     rating= arlist[index]
     name= book_dict[index][0]
     author= book_dict[index][1]
@@ -96,16 +97,18 @@ class Recommender:
             return empty
         for l in f:
             l=l.strip()
-            print(l)
+            #print(l)
             l=l.split()
             #print(l)
             name=l[0]
             del l[0]
+            l=map(int,l)
+            #print l
             #print(l)
-            for i in l:
-                i=float(i)
-                print(i)
-            print(l)
+            #for i in l:
+             #   i=float(i)
+              #  print(i)
+            #print(l)
             #l=ll
             self.user_dictionary[name]=l
         f.close()
@@ -144,22 +147,28 @@ class Recommender:
     def recommend_books(self, uid):
         match = self.get_most_similar_user(uid) 
         leng=len(self.user_dictionary[uid])
-        uid= self.user_dictionary[uid]
+        uid= self.user_dictionary[match]
         match=self.user_dictionary[match]
         ratings=[]
         for i in range (0,leng):
             if match[i]== 3 or 5:
                 if uid[i]==0:
+                    print match[i]
                     ratings.append(lookup_average_rating(match[i],self.user_dictionary,self.average_rating_list))
         return ratings
 
 
 
 def main():
+    book_list=read_books("book.txt")
+    user_dictionary=read_users("ratings.txt")
+    average_rating_list=calculate_average_rating(user_dictionary)
     #a=read_users("ratings.txt")
     #calculate_average_rating(a
+    print lookup_average_rating(0,book_list,average_rating_list)
     r=Recommender("book.txt", "ratings.txt")
     #print(r.user_dictionary)
+    #print r.recommend_books("Brian")
     #print(r.calc_similarity("Cust9","Shannon"))
 if __name__ == "__main__":
     main()
