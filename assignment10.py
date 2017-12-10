@@ -3,6 +3,12 @@
 import os
 
 # part a 
+#this fuction:
+#opens file (returns none if file does not exist)
+#and for each line in the file
+#removes endline char, parses on space and reversed order of the list to get the right order
+#then appends to the list books,
+#finally returns the list
 def read_books(name):
     books=[] #start with an empty list
     try:
@@ -15,6 +21,10 @@ def read_books(name):
         return books
     except:
         return None
+#this fuction is very similar to the above fuction
+#opens file(returns none if file is not found) checks if the file is empty and returns an empty dictionary if it is 
+#for line in the file
+#removes endline char, parses on space, stores the fist thing in the list as the name
 def read_users(user):
     empty={}     # only used if the file is empty 
     ratings={}
@@ -29,7 +39,7 @@ def read_users(user):
         l=l.split()
         name=l[0]
         del l[0]
-        l=map(float,l)
+        l=map(int,l)
         ratings[name]=l
     return ratings
 
@@ -106,8 +116,8 @@ class Recommender:
             #print l
             #print(l)
             #for i in l:
-             #   i=float(i)
-              #  print(i)
+            #   i=float(i)
+            #  print(i)
             #print(l)
             #l=ll
             self.user_dictionary[name]=l
