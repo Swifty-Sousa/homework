@@ -41,34 +41,24 @@ def valid_leng(numbers):
             count+=1
     return count
 
-def calculate_average_rating(rdict): 
-    ave_rating=[] #currently empty list that will be filled with the average ratings of each book
-    rlist=[] #a currently empty list that will be filled with lists of ratings from the ratings dictionary
-    rbook=[] # stores all the ratings for each individial book
-    ave=0.0
-    leng=0.0 
-    for l in rdict:
-        rlist.append(rdict.values()) #appends list for every key in rdict
-    holder=[] #holder list for use in next step
-    #this next nested loop enstially converts rlist into a list of list of book ratings. so rbook[0] is a list of 
-    #all the ratings for book one
-    for i in range (0,len(rlist[0])):
-        for ratings in range (0,len(rlist)):
-           if rlist[ratings][i]!=0:
-               holder.append(rlist[ratings][i])
-               rbook.append(holder)
-        holder=[]
-    #now to calculate the averages
-    final_ratings=[]
-    for i in rbook:
-        leng=float(valid_leng(i))
-        #print(i)
-        type(i)
-        ave=float(sum(i))/leng
-        final_ratings.append(ave)
-        ave=0.0
-        leng=0.0
-    return final_ratings
+def calculate_average_rating(rdict):
+    rlist= rdict.items()# rlist is now a list of touples which have the key and value
+    averages=[]
+    holder=0.0 #just a holder variable to calculatee aveerges in befor I append to a list
+    summ=0.0
+    length=0.0
+    for i in range(0,len(rlist[0][1])):
+        for keys in rdict:
+            if rdict[keys][i]!=0:
+                summ += rdict[keys][i]
+                length+= 1
+        holder=summ/length
+        averages.append(holder)
+        length=0.0
+        summ=0.0
+    return averages
+            
+
 
 def lookup_average_rating(index, book_dict,arlist):
     rating= arlist[index]
@@ -106,13 +96,19 @@ class Recommender:
             return empty
         for l in f:
             l=l.strip()
+            print(l)
             l=l.split()
+            #print(l)
             name=l[0]
             del l[0]
+            #print(l)
+            for i in l:
+                i=float(i)
+                print(i)
+            print(l)
+            #l=ll
             self.user_dictionary[name]=l
-            return self.user_dictionary
-            #return None
-
+        f.close()
     def calculate_average_rating(self):
         self.average_rating_list=calculate_average_rating(self.user_dictionary)
         return None
@@ -121,10 +117,11 @@ class Recommender:
         return a
 
     def calc_similarity(self, user1, user2):
+        leng=len(self.user_dictionary[user1])
         u1=self.user_dictionary[user1]
         u2= self.user_dictionary[user2]
         sim=0
-        for i in range (0,len(u1)):
+        for i in range (0,leng):
             mult=u1[i]*u2[i]
             sim+= mult
         return sim
@@ -159,10 +156,10 @@ class Recommender:
 
 
 def main():
-    a=read_users("ratings.txt")
-    if a==None:
-        print("faluire")
-    #print(a)
-    calculate_average_rating(a)
+    #a=read_users("ratings.txt")
+    #calculate_average_rating(a
+    r=Recommender("book.txt", "ratings.txt")
+    #print(r.user_dictionary)
+    #print(r.calc_similarity("Cust9","Shannon"))
 if __name__ == "__main__":
     main()
