@@ -48,21 +48,22 @@ def calculate_average_rating(rdict):
     ave=0.0
     leng=0.0 
     for l in rdict:
-        rlist=rdict.values() #appends list for every key in rdict
+        rlist.append(rdict.values()) #appends list for every key in rdict
     holder=[] #holder list for use in next step
     #this next nested loop enstially converts rlist into a list of list of book ratings. so rbook[0] is a list of 
     #all the ratings for book one
     for i in range (0,len(rlist[0])):
         for ratings in range (0,len(rlist)):
-           if rlist[ratings][1]!=0:
+           if rlist[ratings][i]!=0:
                holder.append(rlist[ratings][i])
-        rbook.append(holder)
+               rbook.append(holder)
         holder=[]
     #now to calculate the averages
     final_ratings=[]
     for i in rbook:
-        leng=valid_leng(i)
-        ave=sum(i)/leng
+        leng=float(valid_leng(i))
+        print(i)
+        ave=float(sum(i))/leng
         final_ratings.append(ave)
         ave=0.0
         leng=0.0
@@ -82,11 +83,10 @@ class Recommender:
         self.average_rating_list=[]
         self.read_books(books_filename)
         self.read_users(ratings_filename)
-        self.calculate_average_rating()
 
     def read_books(self, file_name):
         try:
-            f= open(name)
+            f= open(file_name)
             for l in f:
                 l=l.strip() # remove /n char
                 l=l.split(',')# makes list of [author,book]
@@ -94,9 +94,23 @@ class Recommender:
                 self.book_list.append(l)
         except:
             return None
+
     def read_users(self, file_name):
-        self.user_dictionary= read_users(file_name) 
-        return None
+        empty={}     # only used if the file is empty 
+        try:
+            f= open(file_name)
+        except:
+            return None
+        if os.stat(file_name)==0: #this checks if the file is empty (thank you stack overflow)
+            return empty
+        for l in f:
+            l=l.strip()
+            l=l.split()
+            name=l[0]
+            del l[0]
+            self.user_dictionary[name]=l
+            return self.user_dictionary
+            #return None
 
     def calculate_average_rating(self):
         self.average_rating_list=calculate_average_rating(self.user_dictionary)
@@ -124,9 +138,9 @@ class Recommender:
             Id=key
             b=self.calc_similarity(userid,Id)
             if b>a:
-                machid=Id
+                matchid=Id
                 a=b
-        return machid
+        return matchid
             
 
     def recommend_books(self, uid):
@@ -144,6 +158,11 @@ class Recommender:
 
 
 def main():
+    a=read_users("ratings.txt")
+    if a==None:
+        print("faluire")
+    print(a)
+    calculate_average_rating(a)
     
     if __name__ == "__main__":
         main()
