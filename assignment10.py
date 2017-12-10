@@ -165,8 +165,9 @@ def main():
     average_rating_list=calculate_average_rating(user_dictionary)
     #a=read_users("ratings.txt")
     #calculate_average_rating(a
-    print lookup_average_rating(0,book_list,average_rating_list)
+    #print lookup_average_rating(0,book_list,average_rating_list)
     r=Recommender("book.txt", "ratings.txt")
+    print r.get_most_similar_user("Rudy_Ann")
     #print(r.user_dictionary)
     #print r.recommend_books("Brian")
     #print(r.calc_similarity("Cust9","Shannon"))
