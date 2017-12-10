@@ -62,7 +62,8 @@ def calculate_average_rating(rdict):
     final_ratings=[]
     for i in rbook:
         leng=float(valid_leng(i))
-        print(i)
+        #print(i)
+        type(i)
         ave=float(sum(i))/leng
         final_ratings.append(ave)
         ave=0.0
@@ -161,8 +162,7 @@ def main():
     a=read_users("ratings.txt")
     if a==None:
         print("faluire")
-    print(a)
+    #print(a)
     calculate_average_rating(a)
-    
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
