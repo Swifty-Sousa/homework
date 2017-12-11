@@ -83,8 +83,9 @@ def calculate_average_rating(rdict):
 #finds the book name and author and saves them to variabales via the same method
 #prints it all out in the format specified in the documentaion 
 def lookup_average_rating(index, book_dict,arlist):
-    #print arlist
+    #print arlis
     rating= arlist[index]
+    #print rating
     name= book_dict[index][0]
     author= book_dict[index][1]
     return "(%.2f) %s by %s" %(rating,name,author)
@@ -98,6 +99,7 @@ class Recommender:
         self.average_rating_list=[]
         self.read_books(books_filename)
         self.read_users(ratings_filename)
+        self.calculate_average_rating()
     #almost identiacl to the read books from above but this time
     #it modifies self.book_list instead of a fucntion variable
     # this does not return anythin unless te file does not open
@@ -191,8 +193,7 @@ class Recommender:
                 a=b
         return matchid
             
-        #this fuction is a little broken still but i have aran out of time
-        # it is suppost to find the most similar user to the one given to the fuction by calling 
+        #finds the most similar user to the one given to the fuction by calling 
         #find most simialr user
         #then it searches for books that the original usr has not read (has a score of 0)
         #checks if the beest matching user rates the book 3 or 5
@@ -202,14 +203,14 @@ class Recommender:
     def recommend_books(self, uid):
         match = self.get_most_similar_user(uid) 
         leng=len(self.user_dictionary[uid])
-        uid= self.user_dictionary[match]
-        match=self.user_dictionary[match]
+        user= self.user_dictionary[uid]
+        matchuser=self.user_dictionary[match]
         ratings=[]
         for i in range (0,leng):
-            if match[i]== 3 or 5:
-                if uid[i]==0:
+            if self.user_dictionary[match][i]== 3 or self.user_dictionary[match][i]== 5:
+                if user[i]==0:
                     #print match[i]
-                    ratings.append(lookup_average_rating(match[i],self.user_dictionary,self.average_rating_list))
+                    ratings.append(lookup_average_rating(i,self.book_list,self.average_rating_list))
         return ratings
 
 #some of my testcases
@@ -222,9 +223,9 @@ def main():
     #calculate_average_rating(a
     #print lookup_average_rating(0,book_list,average_rating_list)
     r=Recommender("book.txt", "ratings.txt")
-    print r.get_most_similar_user("Rudy_Ann")
+    #print r.get_most_similar_user("Rudy_Ann")
     #print(r.user_dictionary)
-    #print r.recommend_books("Brian")
+    print r.recommend_books("Brian")
     #print(r.calc_similarity("Cust9","Shannon"))
 if __name__ == "__main__":
     main()
