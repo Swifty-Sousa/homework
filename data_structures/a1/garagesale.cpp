@@ -2,6 +2,20 @@
 #include<iostream>
 #include<fstream>
 using namespace std;
+
+struct item{
+    int status; // this will be if the item is for sale or wanted, it will be either be one or two for when i am searching for wanted and for sale
+    string name; // name of the object being bought or sold
+    int price; // the price or price to pay of the object
+    item(){}
+    item(int n, int s, string na)
+    {
+        status=s;
+        name=na;
+        price=n;    
+    }
+};
+
 // Split is a a fuction I wrote for a previous class
 // you can see it is in my resources repo on my github
 //https://github.com/swiftsong/resources/blob/master/cppresources.cpp
@@ -11,7 +25,6 @@ int Split(string str, char x ,string array[])
     int j=0;
     int k=0;
     int c=0;
-    int count=0;
     if (str=="")
         {
             return 0;
@@ -27,7 +40,6 @@ int Split(string str, char x ,string array[])
             count++;
         }
         i++;
-    }
     return count;
 }
 
@@ -40,9 +52,6 @@ void getdata(string data[])
     int i=0;
     datafile.open("garageSale.txt");
     if (datafile.fail())
-    {
-        cout<< "Error, file not found"<<endl;
-    }
     while(!datafile.eof())
     {
         getline(datafile, line);
@@ -51,13 +60,37 @@ void getdata(string data[])
     }
 
 }
+ void processdata(string data[100], item objects[100])
+ {
+     string holder_array[3];
+     int status;
+     string name;
+     int cost;
+     string holder_str;
+     for(int i=0; i<100; i++)
+     {
+        Split(data[i], ',', holder_array);
+        name=holder_array[0];
+        if(holder_array[1]== " for sale")
+        {
+            status=1;
+        }
+        else
+        {
+            status=2;
+        }
+        holder_str= holder_array[2].substr(1,holder_array[2].length());
+     }
+
+ }
 
 
 
 int main(void)
 {
     string data[100];
-    //struct objects[100];
+    item objects[100];
     getdata(data);
-    cout<< data[5]<< endl;
+    processdata(data,objects);
+    //cout<< data[53]<< endl;
 }
