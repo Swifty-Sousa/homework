@@ -1,6 +1,7 @@
 // Author: Christian F. Sousa
 #include<iostream>
 #include<fstream>
+#include<stdlib.h>
 using namespace std;
 
 struct item{
@@ -53,7 +54,7 @@ int delete_array_pos(item array[],int index,int size)// fuction that removes a e
     }
     return size;
 }
-bool evaluate(item dd, int index, item objects)
+bool evaluate(item dd, int index, item objects[])
 {
     for(int i=0; i<index;i++)
     {
@@ -62,7 +63,7 @@ bool evaluate(item dd, int index, item objects)
         {
             if(dd.price+bb.price>=0)// if this is passed then the two items are a match
             {
-                if(dd.status=2)
+                if(dd.status==2)
                 {
                     cout<<dd.name<< " "<< dd.price<< endl;
                 }
@@ -73,12 +74,10 @@ bool evaluate(item dd, int index, item objects)
                 return true;
             }
         }
-        return false;
     }
-
-
+    return false;
 }
-item makeitem( string holder_array)
+item makeitem( string holder_array[])
 {
     int status;
     string name;
@@ -94,18 +93,18 @@ item makeitem( string holder_array)
         status=2;
     }
     holder_str= holder_array[2].substr(1,holder_array[2].length());// this is the string that will hold the price
-    holderint=stoi(holder_str);
+    int holderint=stoi(holder_str);
     if(status==1)
     {
-        holderint=holdering*(-1); // this will come up later to help determin a price match, see teh fuction evaluate above
+        holderint=holderint*(-1); // this will come up later to help determin a price match, see teh fuction evaluate above
     }
-    item a(name,status,stoi(holder_str))
+    item a(name,status,stoi(holder_str));
     return a;
 
 }
 // this fuction reads each line parses it and then creates a struct with the line
 // then the struct is passes to evaluate
-void getdata(string filename, item objects)
+int getdata(string filename, item objects[])
 {
      string line;
      string data[3];
@@ -120,8 +119,8 @@ void getdata(string filename, item objects)
      while(!datafile.eof())
      {
          getline(datafile, line);
-         Split(line,',',data)
-         item holder=makeitem(data[]);
+         Split(line,',',data);
+         item holder=makeitem(data);
          if(evaluate(holder,i, objects)==false)
          {
             objects[i]=holder;
@@ -140,11 +139,14 @@ int main(int argc, char*argv[])
 {
     item objects[100];
     item a("null",-1,-1);
-    for(int i=0; i<100; i++)
-    {
-        objects[i]= a;
-    }
     string filename= argv[1];
-    getdata(filename,objects);
-    //cout<< data[53]<< endl;
+    int size=getdata(filename,objects);
+    for(int i=0; i<size; i++) 
+    {
+        if(objects[i].status=)
+        {
+            cout<< 
+        }
+    }
+    return 0;
 }
