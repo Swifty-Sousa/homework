@@ -108,7 +108,7 @@ int getdata(string filename, item objects[])
 {
      string line;
      string data[3];
-     fstream datafile;\
+     fstream datafile;
      int i=0;
      int size=0;
      datafile.open(filename);
@@ -125,12 +125,14 @@ int getdata(string filename, item objects[])
          {
             objects[i]=holder;
             size++;
+            i++;
          }
          else
          {
             size=delete_array_pos(objects,i,size);  
+            i--;
          }
-         i++;
+         
      }
      datafile.close();
      return size;
@@ -140,19 +142,27 @@ int getdata(string filename, item objects[])
 int main(int argc, char*argv[])
 {
     item objects[100];
-    item a("null",-1,-1);
+    item a("null", -1,-1);
+    for(int i=0;i<100;i++)
+    {
+        objects[i]=a;
+    }
     string filename= argv[1];
     int size=getdata(filename,objects);
     cout<< "#"<< endl;
-    for(int i=0; i<size; i++) 
+    for(int i=0; i<100; i++) 
     {
-        if(objects[i].status==1)
+        if(objects[i].status==a.status)
+        {
+            continue;
+        }
+        else if(objects[i].status==1)
         {
             cout<<objects[i].name<<", for sale, "<<abs(objects[i].price)<< endl; 
         }
         else
         {
-            cout<<objects[i].name<< ", wanted "<< objects[i].price<< endl;
+            cout<<objects[i].name<< ", wanted, "<< objects[i].price<< endl;
         }
     }
     cout<<"#"<< endl;
