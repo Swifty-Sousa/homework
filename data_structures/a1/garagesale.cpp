@@ -61,7 +61,7 @@ bool evaluate(item dd, int index, item objects[])
         item bb=objects[i];
         if(dd.name==bb.name && dd.status+bb.status==3)//  the only way for the statuses to add to 3 is if one is for sale and one is wanted
         {
-            if(dd.price+bb.price>=0)// if this is passed then the two items are a match
+            if(dd.price+bb.price>=0)// this is where having a negative price comes in, if the summation come out >=0 then the items can be sold
             {
                 if(dd.status==2)
                 {
@@ -73,7 +73,7 @@ bool evaluate(item dd, int index, item objects[])
                 }
                 return true;
             }
-        }
+        }// if either of the above comparisons fail then the items are not a match and the program returns false
     }
     return false;
 }
@@ -109,12 +109,13 @@ int getdata(string filename, item objects[])
      string line;
      string data[3];
      fstream datafile;
-     int i=0;
+     int i=0;// these two are for keeping track of incecies in the arrays
      int size=0;
      datafile.open(filename);
      if (datafile.fail())
      {
-        cout<< "file not found"<< endl;
+        cout<< "file not found"<< endl;// my way of cheacking if a file fails to open
+        return -1;
      }
      while(!datafile.eof())
      {
@@ -149,8 +150,12 @@ int main(int argc, char*argv[])
     }
     string filename= argv[1];
     int size=getdata(filename,objects);
+    if(size==-1)// if the file fails to open getedata retuns -1 and then the rest is terminated as well
+    {
+        return 0;
+    }
     cout<< "#"<< endl;
-    for(int i=0; i<100; i++) 
+    for(int i=0; i<100; i++) // this loop prints out the remaining things in the array
     {
         if(objects[i].status==a.status)
         {
@@ -158,8 +163,8 @@ int main(int argc, char*argv[])
         }
         else if(objects[i].status==1)
         {
-            cout<<objects[i].name<<", for sale, "<<abs(objects[i].price)<< endl; 
-        }
+            cout<<objects[i].name<<", for sale, "<<abs(objects[i].price)<< endl;
+        }// above i made items with status 1 have a negartive price so i have to abs(price) for the cout
         else
         {
             cout<<objects[i].name<< ", wanted, "<< objects[i].price<< endl;
