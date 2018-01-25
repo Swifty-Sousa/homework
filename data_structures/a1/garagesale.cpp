@@ -77,7 +77,7 @@ bool evaluate(item dd, int index, item objects[])
     }
     return false;
 }
-item makeitem( string holder_array[])
+item makeitem(string holder_array[])
 {
     int status;
     string name;
@@ -96,7 +96,7 @@ item makeitem( string holder_array[])
     int holderint=stoi(holder_str);
     if(status==1)
     {
-        holderint=holderint*(-1); // this will come up later to help determin a price match, see teh fuction evaluate above
+        holderint=holderint*(-1); // this will come up later to help determin a price match, see the fuction evaluate above
     }
     item a(name,status,stoi(holder_str));
     return a;
@@ -133,6 +133,8 @@ int getdata(string filename, item objects[])
          i++;
      }
      datafile.close();
+     return size;
+     
 }
 
 int main(int argc, char*argv[])
@@ -141,12 +143,18 @@ int main(int argc, char*argv[])
     item a("null",-1,-1);
     string filename= argv[1];
     int size=getdata(filename,objects);
+    cout<< "#"<< endl;
     for(int i=0; i<size; i++) 
     {
-        if(objects[i].status=)
+        if(objects[i].status==1)
         {
-            cout<< 
+            cout<<objects[i].name<<", for sale, "<<abs(objects[i].price)<< endl; 
+        }
+        else
+        {
+            cout<<objects[i].name<< ", wanted "<< objects[i].price<< endl;
         }
     }
+    cout<<"#"<< endl;
     return 0;
 }
