@@ -17,6 +17,7 @@ struct item{
 };
 // Split is a a fuction I wrote for a previous class
 // you can see it is in my resources repo on my github
+// it has been slightly modifed to fit this project
 //https://github.com/swiftsong/resources/blob/master/cppresources.cpp
 int Split(string str, char x ,string array[])
 {
@@ -43,22 +44,41 @@ int Split(string str, char x ,string array[])
     }
     return count;
 }
-int delete_array_pos(array[],index,size)// fuction that removes a entry in the array
+int delete_array_pos(item array[],int index,int size)// fuction that removes a entry in the array
 {
-    for(i=index;i<size;i++)
+    for(int i=index;i<size;i++)
     {
-        array[i]=array[x+1];
+        array[i]=array[i+1];
         size--;
     }
     return size;
 }
-bool evaluate(item dd, int index)
+bool evaluate(item dd, int index, item objects)
 {
-    for
+    for(int i=0; i<index;i++)
+    {
+        item bb=objects[i];
+        if(dd.name==bb.name && dd.status+bb.status==3)//  the only way for the statuses to add to 3 is if one is for sale and one is wanted
+        {
+            if(dd.price+bb.price>=0)// if this is passed then the two items are a match
+            {
+                if(dd.status=2)
+                {
+                    cout<<dd.name<< " "<< dd.price<< endl;
+                }
+                else
+                {
+                    cout<< bb.name<< " "<< bb.price<< endl;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }
-item makeitem(holder_array)
+item makeitem( string holder_array)
 {
     int status;
     string name;
@@ -73,11 +93,11 @@ item makeitem(holder_array)
     {
         status=2;
     }
-    holder_str= holder_array[2].substr(1,holder_array[2].length());// this is the strign that will hold the price
+    holder_str= holder_array[2].substr(1,holder_array[2].length());// this is the string that will hold the price
     holderint=stoi(holder_str);
     if(status==1)
     {
-        holderint=holdering*(-1); // this will come up later to help determin a price match
+        holderint=holdering*(-1); // this will come up later to help determin a price match, see teh fuction evaluate above
     }
     item a(name,status,stoi(holder_str))
     return a;
@@ -89,10 +109,14 @@ void getdata(string filename, item objects)
 {
      string line;
      string data[3];
-     fstream datafile;
+     fstream datafile;\
      int i=0;
+     int size=0;
      datafile.open(filename);
      if (datafile.fail())
+     {
+        cout<< "file not found"<< endl;
+     }
      while(!datafile.eof())
      {
          getline(datafile, line);
@@ -100,16 +124,26 @@ void getdata(string filename, item objects)
          item holder=makeitem(data[]);
          if(evaluate(holder,i, objects)==false)
          {
-             objects[i]=holder;
+            objects[i]=holder;
+            size++;
+         }
+         else
+         {
+            size=delete_array_pos(objects,i,size);  
          }
          i++;
      }
      datafile.close();
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char*argv[])
 {
     item objects[100];
+    item a("null",-1,-1);
+    for(int i=0; i<100; i++)
+    {
+        objects[i]= a;
+    }
     string filename= argv[1];
     getdata(filename,objects);
     //cout<< data[53]<< endl;
