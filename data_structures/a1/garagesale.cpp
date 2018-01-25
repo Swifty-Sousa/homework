@@ -1,4 +1,6 @@
 // Author: Christian F. Sousa
+// CSCI 2270 Data structures
+// section 104(i think)
 #include<iostream>
 #include<fstream>
 #include<stdlib.h>
