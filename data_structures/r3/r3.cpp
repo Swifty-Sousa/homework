@@ -3,7 +3,7 @@
 #include<iostream>
 #include<fstream>
 using namespace std;
-void doublearray(int array, int *s)
+void doublearray(int *&ptr, int *s)
 {
     int capacity=*s *2;
     int *new_array;
@@ -18,7 +18,7 @@ void doublearray(int array, int *s)
 }
 int main(int argc, char *argv[])
 {
-    int array[10];
+    int *p = new int[10];
     for( int i=0; i<10;i++)
     {
         array[i]=-10;
