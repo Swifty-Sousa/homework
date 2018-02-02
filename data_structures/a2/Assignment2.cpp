@@ -13,13 +13,15 @@ struct text(){
         count=0;
     }
 };
-void getStopWords(ingnoreFilename, ignoreWords[])
+void getStopWords(char *ingnoreFilename, string ignoreWords[])
+// broken 
 {
     ofstream datafile;
-    datafile.open(ingnoreFilename);
+    string filename=->ingnoreFilename
+    datafile.open(filename);
     if(datafile.fail())
     {
-        cout<< "Error: file "<< ingnoreFilename<< " not found."<< enld;
+        cout<< "Error: file "<< filename<< " not found."<< enld;
         return;
     }
     string line;
@@ -31,9 +33,9 @@ void getStopWords(ingnoreFilename, ignoreWords[])
         i++;
     }
     datafile.close();
-    return;
 }
 bool isStopWord(string word, string ignoreWords[])
+// works
 {
     for(int i=0; i<50; i++)
     {
@@ -46,7 +48,7 @@ bool isStopWord(string word, string ignoreWords[])
 }
 int main(int argc, char *argv[])
 {
-    string ReadFilename=argv[2];
+    string *ReadFilename=&argv[2];
     string ingnoreFilename=argv[3];
     string ignoreWords[50];
     int topN=argv[1];
