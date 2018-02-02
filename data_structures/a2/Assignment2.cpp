@@ -1,34 +1,37 @@
 // Author: Christian F. Sousa
 // data structures section 104
-#include<istream>
+#include<iostream>
 #include<fstream>
+#include<string>
+#include<sstream>
 using namespace std;
-struct text(){
+struct wordItem(){
    int count;
-   string literal;
-   text(){} 
-   text(string w)
+   string word;
+   wordItem(){} 
+   wordItem(string w)
     {
-        literal=w;
+        word=w;
         count=0;
     }
 };
 void getStopWords(char *ingnoreFilename, string ignoreWords[])
-// broken 
+// works
 {
-    ofstream datafile;
-    string filename=->ingnoreFilename
+    ifstream datafile;
+    string filename=ingnoreFilename;
     datafile.open(filename);
     if(datafile.fail())
     {
-        cout<< "Error: file "<< filename<< " not found."<< enld;
+        cout<< "Error: file "<< filename<< " not found."<< endl;
         return;
     }
     string line;
     int count=0;
+    int i=0;
     while(!datafile.eof())
     {
-        getline(datafile,line)        
+        getline(datafile,line);        
         ignoreWords[i]=line;
         i++;
     }
@@ -46,11 +49,48 @@ bool isStopWord(string word, string ignoreWords[])
     }
     return false;
 }
+int getTotalNumberNonStopWords(wordItem list[], int length)
+// works
+{
+    int count=0;
+    for(int i=0;i<length; i++)
+    {
+        count+= list[i].count;
+    }
+    return count;
+}
+void arraySort(wordItem list[], int length)
+{
+    wordItem holder1;
+    wordItem holder2;
+    for(int i=0; i<lengthi-1; i++)
+    {
+        if(list[i].count<list[i+1].count)
+        {
+            holder1=list[i];
+            holder2=list[i+1];
+            list[i]=holder2;
+            list[i+1]=holder1;
+            i=-1;
+        }
+    }
+}
+
+void printTopN(wordItem list[], int N)
+// works
+{
+    for(int i=0; i<N; i++)
+    {
+        cout<< list[i].count<<" - "<< list[i].word<< endl;
+    }
+}
+void insert()
 int main(int argc, char *argv[])
 {
-    string *ReadFilename=&argv[2];
-    string ingnoreFilename=argv[3];
     string ignoreWords[50];
-    int topN=argv[1];
+    int topN=stoi(argv[1])
+    readfile= argv[2];
+    getStopWords(argv[3],ignoreWords[50]);
+    
 
 }
