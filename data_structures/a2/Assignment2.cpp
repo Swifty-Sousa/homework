@@ -49,6 +49,18 @@ bool isStopWord(string word, string ignoreWords[])
     }
     return false;
 }
+void arrayX2(int *&aptr, int *size)
+{
+    int newsize= *size*2;
+    int *newarray= new int[newsize];
+    for(int i=0; i<*size;i++)
+    {
+        newarray[i]=aptr[i];
+    }
+    free(aptr);
+    aptr=newarray;
+    *size=newsize;
+}
 int getTotalNumberNonStopWords(wordItem list[], int length)
 // works
 {
