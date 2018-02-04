@@ -39,22 +39,18 @@ void count(string filename)
 }
 int main(void)
 {
-    /*
-    int *array = new int[2];
+    string *array = new int[2];
     int size =2;
-    array[0]=0;
-    array[1]=0;
-    cout<< "current array size "<<size<< endl;
-    for(int i=0; i<size;i++)
+    int elements=0;
+    string line
+    ifstream datafile;
+    datafile.open(test.txt);
+    while(getline(datafile,line))
     {
-        cout<< "Array at inex " << i<< " is "<< array[i]<< endl;
+        stringstream ss(line)
+        while(ss.good())
+        {
+            if()
+        }
     }
-    cout <<"doubling array"<< endl;
-    arrayX2(array,&size);
-    array[2]=7;
-    array[3]=7;
-    cout<< "array Doubled"<< endl;
-    cout<< "array size is now "<< size<< endl;
-    */
-    count("test.txt");
 }

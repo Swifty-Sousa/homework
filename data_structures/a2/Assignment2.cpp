@@ -5,14 +5,14 @@
 #include<string>
 #include<sstream>
 using namespace std;
-struct wordItem(){
+struct wordItem{
    int count;
    string word;
    wordItem(){} 
    wordItem(string w)
     {
         word=w;
-        count=0;
+        count=1;
     }
 };
 void getStopWords(char *ingnoreFilename, string ignoreWords[])
@@ -27,7 +27,6 @@ void getStopWords(char *ingnoreFilename, string ignoreWords[])
         return;
     }
     string line;
-    int count=0;
     int i=0;
     while(!datafile.eof())
     {
@@ -49,21 +48,18 @@ bool isStopWord(string word, string ignoreWords[])
     }
     return false;
 }
-void arrayX2(int *&aptr, int *size)
-// works
+void arrayX2(wordItem *&aptr, int *size)
 {
-    int newsize= *size*2;
-    int *newarray= new int[newsize];
-    for(int i=0; i<*size;i++)
+    *size=*size*2;
+    wordItem *newarray= new wordItem[*size];
+    for(int i=0; i<*size/2;i++)
     {
         newarray[i]=aptr[i];
     }
-    free(aptr);
+    delete [] aptr;
     aptr=newarray;
-    *size=newsize;
 }
 int getTotalNumberNonStopWords(wordItem list[], int length)
-// works
 {
     int count=0;
     for(int i=0;i<length; i++)
@@ -74,21 +70,18 @@ int getTotalNumberNonStopWords(wordItem list[], int length)
 }
 void arraySort(wordItem list[], int length)
 {
-    wordItem holder1;
-    wordItem holder2;
-    for(int i=0; i<lengthi-1; i++)
+    for(int j=1;j<length;j++)
     {
-        if(list[i].count<list[i+1].count)
+        wordItem key=list[j];
+        int i=j-1;
+        while(i>=0&& list[i].count<key.count)
         {
-            holder1=list[i];
-            holder2=list[i+1];
-            list[i]=holder2;
-            list[i+1]=holder1;
-            i=-1;
+            list[i+1]=list[i];
+            i--;
         }
+        list[i+1]=key;
     }
 }
-
 void printTopN(wordItem list[], int N)
 // works
 {
@@ -97,11 +90,11 @@ void printTopN(wordItem list[], int N)
         cout<< list[i].count<<" - "<< list[i].word<< endl;
     }
 }
-int ismywords(wordItem *&array[],string item , int numWords)
+int ismywords(wordItem *&array,string item , int numWords)
 {
     for(int i=0;i< numWords; i++)
     {
-        if(array[i].word=item)
+        if(array[i].word==item)
         {
             return i;
         }
@@ -110,29 +103,26 @@ int ismywords(wordItem *&array[],string item , int numWords)
 }
 int main(int argc, char *argv[])
 {
-    if(argc!=3)
-    {
-        return -1;
-    }
     wordItem *mywords = new wordItem [100];
     int arraysize=100;
     int numWords=0; // this is the number of unique words in mywords[]
+    int adcounter=0; // is the int that keeps track of how many times the array is doubled
     string ignoreWords[50];
-    int topN=stoi(argv[1])
-    readfile= argv[2];
-    getStopWords(argv[3],ignoreWords[50]);
+    int topN=stoi(argv[1]);
+    string readfile= argv[2];
+    getStopWords(argv[3],ignoreWords);
     ifstream datafile;
-    datafile.open();
+    datafile.open(readfile);
     if(datafile.fail())
     {
-        cout<< "Error file not found"<< enld;
+        cout<< "Error file not found"<< endl;
     }
     string line;
     string item;
-    int hold;
-    while(getline(datafile, line)
+    int x;// used as a comparison holder a few lines down
+    while(getline(datafile, line))
     {
-        stiringstream ss(line)
+       stringstream ss(line);
        while(ss.good()) 
        {
            ss>> item;
@@ -140,23 +130,31 @@ int main(int argc, char *argv[])
            {
                continue;
            }
-           x=ismywords(mywords[],item,numWords);
-           else if(x!=-1)
+           x=ismywords(mywords,item,numWords);
+           if(x!=-1)
            {
-               mywords[x].count++;
+               mywords[x].count=mywords[x].count+1;
            }
            else
            {
                if(numWords==arraysize)
                {
-                   arrayX2(mywords[],&arraysize);
+                   arrayX2(mywords,&arraysize);
+                   adcounter++;
                }
-               mywords[numWords+1]=wordItem(item);
+               mywords[numWords]=wordItem(item);
+               numWords++;
            }
-
        }
     }
-
-    
-
+    datafile.close();
+    arraySort(mywords,numWords);
+    printTopN(mywords, topN);
+    cout<< "#"<< endl;
+    cout<< "Array doubled: "<< adcounter<< endl;
+    cout<< "#"<< endl;
+    cout<< "Unique non-common words: "<<numWords<< endl;
+    cout<< "#"<<endl;
+    cout<< "Total non-common words: "<< getTotalNumberNonStopWords(mywords, numWords)<< endl;
+    return 0;
 }
