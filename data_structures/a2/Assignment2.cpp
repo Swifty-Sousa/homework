@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
     string line;
     string item;
     int x;// used as a comparison holder a few lines down
-    while(getline(datafile, line))
+    while(datafile>>line)
     {
        stringstream ss(line);
        while(ss.good()) 
