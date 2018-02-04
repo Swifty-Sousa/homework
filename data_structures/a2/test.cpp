@@ -1,4 +1,6 @@
 #include<iostream>
+#include<fstream>
+#include<sstream>
 using namespace std;
 void arrayX2(int *&aptr, int *size)
 {
@@ -12,8 +14,32 @@ void arrayX2(int *&aptr, int *size)
     aptr=newarray;
     *size=newsize;
 }
+void count(string filename)
+{
+    ifstream datafile;
+    datafile.open(filename);
+    if(datafile.fail())
+    {
+        cout<< "File not found"<< endl;
+    }
+    int count=0;
+    string line;
+    string word;
+    while(getline(datafile, line)) 
+    {
+        stringstream ss(line);
+        while(ss.good())
+        {
+            ss >> word;
+            count++;
+            cout<< word<< endl;
+        }
+    }
+    cout<< "The answer is "<< count<< endl;
+}
 int main(void)
 {
+    /*
     int *array = new int[2];
     int size =2;
     array[0]=0;
@@ -29,4 +55,6 @@ int main(void)
     array[3]=7;
     cout<< "array Doubled"<< endl;
     cout<< "array size is now "<< size<< endl;
+    */
+    count("test.txt");
 }

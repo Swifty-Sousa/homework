@@ -50,6 +50,7 @@ bool isStopWord(string word, string ignoreWords[])
     return false;
 }
 void arrayX2(int *&aptr, int *size)
+// works
 {
     int newsize= *size*2;
     int *newarray= new int[newsize];
@@ -96,13 +97,66 @@ void printTopN(wordItem list[], int N)
         cout<< list[i].count<<" - "<< list[i].word<< endl;
     }
 }
-void insert()
+int ismywords(wordItem *&array[],string item , int numWords)
+{
+    for(int i=0;i< numWords; i++)
+    {
+        if(array[i].word=item)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
 int main(int argc, char *argv[])
 {
+    if(argc!=3)
+    {
+        return -1;
+    }
+    wordItem *mywords = new wordItem [100];
+    int arraysize=100;
+    int numWords=0; // this is the number of unique words in mywords[]
     string ignoreWords[50];
     int topN=stoi(argv[1])
     readfile= argv[2];
     getStopWords(argv[3],ignoreWords[50]);
+    ifstream datafile;
+    datafile.open();
+    if(datafile.fail())
+    {
+        cout<< "Error file not found"<< enld;
+    }
+    string line;
+    string item;
+    int hold;
+    while(getline(datafile, line)
+    {
+        stiringstream ss(line)
+       while(ss.good()) 
+       {
+           ss>> item;
+           if(isStopWord(item,ignoreWords))
+           {
+               continue;
+           }
+           x=ismywords(mywords[],item,numWords);
+           else if(x!=-1)
+           {
+               mywords[x].count++;
+           }
+           else
+           {
+               if(numWords==arraysize)
+               {
+                   arrayX2(mywords[],&arraysize);
+               }
+               mywords[numWords+1]=wordItem(item);
+           }
+
+       }
+    }
+
     
 
 }
