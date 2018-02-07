@@ -5,6 +5,7 @@ using namespace std;
 struct city{
     string name;
     string value; 
+    city ->next;
 };
 int MainMenu()
 {
@@ -25,6 +26,12 @@ void BuildNetwork()
 int main()
 {
     int command;
+    string baseCities[10];
+    baseCities[0]="Los Angles":
+    baseCities[1]="Pheonix";
+    baseCities[2]="Denver";
+    baseCities[3]="Dallas";
+
     command =MainMenu();
     while(true)
     {
