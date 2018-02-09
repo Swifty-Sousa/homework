@@ -3,9 +3,16 @@
 #include<iostream>
 using namespace std;
 struct city{
-    string name;
-    string value; 
-    city ->next;
+    string cityName;
+    string message; 
+    city *next;
+    city(){};
+    city(string n, city *k, string m)
+    {
+        name=n;
+        key=k;
+        next=m;
+    }
 };
 int MainMenu()
 {
@@ -19,25 +26,65 @@ int MainMenu()
     cin>>x;
     return x;
 }
-void BuildNetwork()
+city *buildNetwork()
 {
+    city *x0= new city("Los Angeles", NULL, "");
+    city *x1= new city("Phoenix",NULL,"");
+    x0->next=x1;
+    city *x2= new city("Denver", NULL, "");
+    x1->next=x2;
+    city *x3=new city("Dallas", NULL, "");
+    x2->next=x3;
+    city *x4= new city("St. Louis",NULL, "");
+    x3->next=x4;
+    city *x5= new city("Chicago",NULL,"");
+    x4->next=x5;
+    city *x6= new city("Atlanta",NULL,"");
+    x5->next=x6;
+    city *x7 = new city("Washington, D.C.",NULL,"");
+    x6->next=x7;
+    city *x8= new city("New York",NULL, "");
+    x7->next =x8;
+    city *x9 =new city ("Boston", NULL, "");
+    x8->next= x9;
+    return x0;
+}
+void printPath(city *head)
+{
+    cout<<"===Current Path==="<< endl;
+    city *temp=head;
+    string arrow=" -> ";
+    while(temp!=NULL)
+    {
+        cout<< temp->cityName<<arrow;
+        temp=temp->next;
+    }
+    cout<< "NULL"<< endl;
+    cout<<"=================="<<endl;
 
+}
+city *addCity(city *head, city *previous, string cityName)
+{
+    city *temp=head;
+    while(temp!=previous)
+    {
+        temp=temp->next;
+    }
+    
 }
 int main()
 {
     int command;
-    string baseCities[10];
-    baseCities[0]="Los Angles":
-    baseCities[1]="Pheonix";
-    baseCities[2]="Denver";
-    baseCities[3]="Dallas";
-
-    command =MainMenu();
     while(true)
     {
-        if(command==0)
+        command= MainMenu();
+        if(command==5)
         {
             return 0;
-        }   
+        }
+        else if (command=1)   
+        {
+           city *head= buildNetwork();
+        }
     }
 }
