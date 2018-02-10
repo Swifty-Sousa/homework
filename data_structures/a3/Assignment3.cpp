@@ -66,11 +66,21 @@ void printPath(city *head)
 city *addCity(city *head, city *previous, string cityName)
 {
     city *temp=head;
+    if(previous==NULL)
+    {
+        city *in= new city(cityName, NULL,"");
+        previous->next=in;
+    }
+    city *temp2;
     while(temp!=previous)
     {
         temp=temp->next;
+        temp2=temp->next;
     }
-    
+    city *insert= new city (cityName,NULL,"");
+    temp->next=insert;
+    insert->next=temp2;
+    return insert;
 }
 int main()
 {
