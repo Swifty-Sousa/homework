@@ -4,6 +4,7 @@
 #include<fstream>
 #include<sstream>
 using namespace std;
+// thsi is the struct I made as noted in the documentation
 struct city{
     string cityName;
     string message; 
@@ -16,6 +17,8 @@ struct city{
         next=k;
     }
 };
+// I choose to make a fuction call that both prints the main menu
+// and takes in the users command
 int MainMenu()
 {
     cout<< "======Main Menu======"<< endl;
@@ -28,6 +31,8 @@ int MainMenu()
     cin>>x;
     return x;
 }
+// this fuction builds the network of cities as laid out in 
+// the documentation putting all nodes in heap memory
 city *buildNetwork()
 {
     city *x0= new city("Los Angeles", NULL, "");
@@ -51,6 +56,13 @@ city *buildNetwork()
     x8->next= x9;
     return x0;
 }
+// this fuction traverses through  the already built list
+// and prints out the name of each city
+// 
+//NOTE: This CANNOT be done before the network has been built 
+// or you risk shredding the fabric of time and space.
+// 
+// you have been warned.
 void printPath(city *head)
 {
     cout<<"===CURRENT PATH==="<< endl;
@@ -65,6 +77,9 @@ void printPath(city *head)
     cout<<"=================="<<endl;
 
 }
+// This fuction opens a file and passes each word in the text file
+// down the linked list until it reaches the end. The list only has one word moving down'
+// the line at any given time.
 void transmitMsg(city *head)
 {
     ifstream datafile;
@@ -94,10 +109,15 @@ void transmitMsg(city *head)
     }
     datafile.close();
 }
+// this is a fuction to insert the city struct into the linkes list
+// can be inserted as the new head
+// somewhere in the middle
+// or at the end
+// or the auto grader gives us a null head struct to troll us.
 city *addCity(city *head, city *previous, string cityName)
 {
     city *insert= new city (cityName, NULL, "");
-    if (head==nullptr)
+    if (head==nullptr)//  cheacking if were being trolled
     {
         head= insert;
     }
@@ -117,10 +137,7 @@ city *addCity(city *head, city *previous, string cityName)
     }
     return head;
 }
-city * search(city *head)
-{
-
-}
+// my main. 
 int main()
 {
     int command;
@@ -128,6 +145,9 @@ int main()
     city *temp;
     string cityname;
     string pname;
+    // I know infinet loops are considered bad form but in this case
+    // I think if is appropriet as the interface is not suppost to exit 
+    // until the user chooses to exit.
     while(true)
     {
         command= MainMenu();
@@ -155,6 +175,7 @@ int main()
             cin>>cityname;
             cout<< "Enter a previous City name:"<< endl;
             cin>> pname;
+            // this is how I find the right node to give to add city
             while(temp!=NULL)
             {
                 if(temp->cityName==pname)
