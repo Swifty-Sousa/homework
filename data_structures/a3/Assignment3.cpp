@@ -21,7 +21,7 @@ int MainMenu()
     cout<< "======Main Menu======"<< endl;
     cout<< "1. Build Network"<< endl;
     cout<< "2. Print Network Path"<<endl;
-    cout<< "3. Transmit Message Coast-to-Coast"<< endl;
+    cout<< "3. Transmit Message Coast-To-Coast"<< endl;
     cout<< "4. Add City"<< endl;
     cout<< "5. Quit"<< endl;
     int x;
@@ -53,7 +53,7 @@ city *buildNetwork()
 }
 void printPath(city *head)
 {
-    cout<<"===Current Path==="<< endl;
+    cout<<"===CURRENT PATH==="<< endl;
     city *temp=head;
     string arrow=" -> ";
     while(temp!=NULL)
@@ -61,7 +61,7 @@ void printPath(city *head)
         cout<< temp->cityName<<arrow;
         temp=temp->next;
     }
-    cout<< "NULL"<< endl;
+    cout<< " NULL"<< endl;
     cout<<"=================="<<endl;
 
 }
@@ -106,6 +106,10 @@ city *addCity(city *head, city *previous, string cityName)
         insert->next=head;
         head=insert;
     }
+    else if(previous->next==nullptr)
+    {
+        previous->next=insert;
+    }
     else
     {
         insert->next=previous->next;
@@ -121,10 +125,12 @@ int main()
 {
     int command;
     city *head;
+    city *temp;
+    string cityname;
+    string pname;
     while(true)
     {
         command= MainMenu();
-        cout<< "Command is "<< command<< endl;
         if(command==5)
         {
             cout<< "Goodbye!"<< endl;
@@ -138,13 +144,27 @@ int main()
         {
             printPath(head);
         }
-        else if(commad==3)
+        else if(command==3)
         {
-
+            transmitMsg(head);
         }
-        else if(command=4)
+        else if(command==4)
         {
-            
+            temp=head;
+            cout<< "Enter a City name:"<< endl;
+            cin>>cityname;
+            cout<< "Enter a previous City name:"<< endl;
+            cin>> pname;
+            while(temp!=NULL)
+            {
+                if(temp->cityName==pname)
+                {
+                addCity(head, temp, cityname);
+                break;
+                }
+                temp=temp->next;
+            }
+
         }
     }
 }
