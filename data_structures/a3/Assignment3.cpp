@@ -1,6 +1,8 @@
 // Author: Christian F. Sousa
 // CSCI2270 Data Strucrtures section 104
 #include<iostream>
+#include<fstream>
+#include<sstream>
 using namespace std;
 struct city{
     string cityName;
@@ -9,9 +11,9 @@ struct city{
     city(){};
     city(string n, city *k, string m)
     {
-        name=n;
-        key=k;
-        next=m;
+        cityName=n;
+        message=m;
+        next=k;
     }
 };
 int MainMenu()
@@ -63,38 +65,89 @@ void printPath(city *head)
     cout<<"=================="<<endl;
 
 }
+void transmitMsg(city *head)
+{
+    ifstream datafile;
+    datafile.open("messageIn.txt");
+    if(datafile.fail())
+    {
+        cout<< "everything you know is a lie"<< endl;
+    }
+    string line;
+    string item;
+    while(datafile>>line)
+    {
+        stringstream ss(line);
+        ss<<line;
+        while(ss.good())
+        {
+            ss>>item;
+            city *temp=head;
+            while(temp!=NULL)
+            {
+                temp->message=item;
+                cout<< temp->cityName<< " received "<<temp->message<< endl;
+                temp->message="";
+                temp=temp->next;
+            }
+        }
+    }
+    datafile.close();
+}
 city *addCity(city *head, city *previous, string cityName)
 {
-    city *temp=head;
-    if(previous==NULL)
+    if(head==NULL)
     {
-        city *in= new city(cityName, NULL,"");
-        previous->next=in;
+        return head;
     }
+    cout<< "you suck"<< endl;
+    city *temp=head;
+    cout<< "you suck 2"<< endl;
+    if(previous->next==NULL)
+    {
+        cout<< "fail 0"<< endl;
+        city *in= new city(cityName, NULL,"");
+        cout<< "fail 1"<< endl;
+        previous->next=in;
+        cout<< "fail 2"<<endl;
+    }
+    cout<< "You are a disgrace"<< endl;
     city *temp2;
     while(temp!=previous)
     {
         temp=temp->next;
         temp2=temp->next;
     }
+    cout<< "your while loop works"<< endl;
     city *insert= new city (cityName,NULL,"");
+    cout<< "your constructer works"<<endl;
     temp->next=insert;
     insert->next=temp2;
-    return insert;
+    cout <<"your traspheres work"<< endl;
+    return head;
 }
 int main()
 {
     int command;
+    city *head;
     while(true)
     {
         command= MainMenu();
+        cout<< "Command is "<< command<< endl;
         if(command==5)
         {
+            cout<< "Goodbye!"<< endl;
             return 0;
         }
-        else if (command=1)   
+        else if (command==1)   
         {
-           city *head= buildNetwork();
+            cout<< "Network Built .... Probably"<< endl;
+           head= buildNetwork();
+        }
+        else if (command ==2)
+        {
+            cout<< "Ya boi here"<< endl;
+            printPath(head);
         }
     }
 }
