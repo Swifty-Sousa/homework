@@ -96,35 +96,26 @@ void transmitMsg(city *head)
 }
 city *addCity(city *head, city *previous, string cityName)
 {
-    if(head==NULL)
+    city *insert= new city (cityName, NULL, "");
+    if (head==nullptr)
     {
-        return head;
+        head= insert;
     }
-    cout<< "you suck"<< endl;
-    city *temp=head;
-    cout<< "you suck 2"<< endl;
-    if(previous->next==NULL)
+    else if(previous==nullptr)
     {
-        cout<< "fail 0"<< endl;
-        city *in= new city(cityName, NULL,"");
-        cout<< "fail 1"<< endl;
-        previous->next=in;
-        cout<< "fail 2"<<endl;
+        insert->next=head;
+        head=insert;
     }
-    cout<< "You are a disgrace"<< endl;
-    city *temp2;
-    while(temp!=previous)
+    else
     {
-        temp=temp->next;
-        temp2=temp->next;
+        insert->next=previous->next;
+        previous->next= insert;
     }
-    cout<< "your while loop works"<< endl;
-    city *insert= new city (cityName,NULL,"");
-    cout<< "your constructer works"<<endl;
-    temp->next=insert;
-    insert->next=temp2;
-    cout <<"your traspheres work"<< endl;
     return head;
+}
+city * search(city *head)
+{
+
 }
 int main()
 {
@@ -141,13 +132,19 @@ int main()
         }
         else if (command==1)   
         {
-            cout<< "Network Built .... Probably"<< endl;
            head= buildNetwork();
         }
         else if (command ==2)
         {
-            cout<< "Ya boi here"<< endl;
             printPath(head);
+        }
+        else if(commad==3)
+        {
+
+        }
+        else if(command=4)
+        {
+            
         }
     }
 }
