@@ -1,7 +1,7 @@
 //Author: Christian F. Sousa
 // CSCI 2270 data structues, section 104
 class 
-void mainmenue()
+void mainmenu()
 {
     cout<< "======Main Menu======"<< endl;
     cout<< "1. Build Network"<< endl;
@@ -17,7 +17,7 @@ int main(int argc, *char argv[])
     int command;
     while(true)
     {
-        command=mainmenue();
+        command=mainmenu();
         if(command==1)
         {
             
