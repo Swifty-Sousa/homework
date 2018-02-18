@@ -1,4 +1,8 @@
 #include "CommunicationNetwork.h"
+#include<iostream>
+#include<fstream>
+#include<sstream>
+using namespace std;
 // Author: Christian F. Sousa
 // CSCI 2270 data structures section 104
 CommunicationNetwork::CommunicationNetwork(){}
@@ -8,20 +12,90 @@ CommunicationNetwork::~CommunicationNetwork()
 
 }
 // this is the deconstructor I have made
-void CommunicationNetwork::addcity(string prev, string cityn)
+void CommunicationNetwork::addCity(string prev, string cityn)
 {
 
 }
 void CommunicationNetwork::buildNetwork()
 {
-
+    head= new City("Los Angeles",NULL,NULL, "");
+    head-> previous=NULL;
+    City *x= new City("Phoenix", NULL,NULL,"");
+    head->next=x;
+    x->previous=head;
+    City *x1= new City("Denver", NULL,NULL,"");
+    x1->previous=x;
+    x->next= x1;
+    City *x2=new City("Dallas", NULL,NULL,"");
+    x1->next=x2;
+    x2-> previous=x1;
+    City *x3= new City("St. Louis", NULL,NULL,"");
+    x2-> next=x3;
+    x3->previous=x2;
+    City *x4= new City("Chicago", NULL,NULL,"");
+    x3 ->next= x4;
+    x4->previous= x3;
+    City *b1= new City("Atlanta", NULL, NULL, "");
+    x4-> next=b1;
+    b1-> previous=x4;
+    City *x5= new City("Washington, D.C.", NULL,NULL,"");
+    b1->next=x5;
+    x5->previous=b1;
+    City *x6= new City("New York", NULL,NULL,""); 
+    x5->next=x6;
+    x6->previous= x5;
+    City *x7= new City("Boston", NULL,NULL,"");
+    x6-> next=x7;
+    x7-> previous=x6;
+    tail=x7;
 } 
-void CommunicationNetwork::transmitMsg(char * argv[1])
+void CommunicationNetwork::transmitMsg(char * filename)
 {
-
+    ifstream datafile;
+    datafile.open(filename);
+    if (datafile.fail())
+    {
+        cout<< "file not found"<< endl;
+    }
+    string line;
+    string item;
+    while(datafile>>line)
+    {
+        stringstream ss(line);
+        ss<<line;
+        while(ss.good())
+        {
+            ss>>item;
+            City *temp=head;
+            while(temp->next!=NULL)
+            {
+                cout<<temp->cityName<< " received "<< item<< endl;
+                temp=temp->next;
+            }
+             cout<< temp->cityName<< " received "<< item<< endl;
+            temp=temp->previous;
+            while(temp->previous!=NULL)
+            {
+                cout<<temp->cityName<< " received "<< item<< endl;
+                temp=temp->previous;
+            }
+            cout<< temp->cityName<< " received "<< item << endl;
+        }
+    }
 }
 void CommunicationNetwork::printNetwork()
 {
+    City *temp=head;
+    string ar= "<->";
+    cout<< "===CURRENT PATH==="<<endl;
+    cout<< "NULL <-";
+    while(temp!= tail)
+    {
+        cout<<" "<<temp->cityName<< " " << ar;
+        temp=temp->next;
+    }
+    cout<< " " <<tail->cityName<< " -> NULL"<< endl;
+    cout<< "=================="<< endl;
 
 }
 void CommunicationNetwork::deleteCity(string target)

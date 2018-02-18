@@ -1,7 +1,9 @@
 //Author: Christian F. Sousa
 // CSCI 2270 data structues, section 104
-class 
-void mainmenu()
+#include"CommunicationNetwork.h"
+#include<iostream>
+using namespace std;
+int mainmenu()
 {
     cout<< "======Main Menu======"<< endl;
     cout<< "1. Build Network"<< endl;
@@ -11,13 +13,19 @@ void mainmenu()
     cout<< "5. Delete City"<< endl; 
     cout<< "6. Clear Network"<< endl;
     cout<< "7. Quit"<< endl;
-}
-int main(int argc, *char argv[])
-{
     int command;
+    cout<< " Enter a command"<< endl;
+    cin>> command;
+    return  command;
+}
+int main(int argc, char * argv[])
+{ 
+    int command;
+    CommunicationNetwork a;
+    a.buildNetwork();
     while(true)
     {
-        command=mainmenu();
+        int command=mainmenu();
         if(command==1)
         {
             
