@@ -14,7 +14,40 @@ CommunicationNetwork::~CommunicationNetwork()
 // this is the deconstructor I have made
 void CommunicationNetwork::addCity(string prev, string cityn)
 {
-
+    City *newc= new City(cityn, NULL, NULL, "");
+    City *temp=head;
+    if(head== NULL)
+    {
+        head=newc;
+        tail=head;
+    }
+    else if (prev=="")
+    {
+        tail->next=newc;
+        newc->previous=tail;
+        tail=newc;
+    }
+    else
+    {
+        while(temp!=NULL)
+        {
+            if(temp==tail)
+            {
+                tail->next=newc;
+                newc->previous=tail;
+                tail=newc;
+            }
+            else
+            {
+                temp->next->previous=newc;
+                newc->next=temp->next;
+                newc->previous=temp;
+                temp->next=newc;
+                break;
+            }
+            temp=temp->next;
+        }
+    }
 }
 void CommunicationNetwork::buildNetwork()
 {
@@ -51,6 +84,11 @@ void CommunicationNetwork::buildNetwork()
 } 
 void CommunicationNetwork::transmitMsg(char * filename)
 {
+    if(head==NULL)
+    {
+        cout<< "Empty list"<< endl;
+        return;
+    }
     ifstream datafile;
     datafile.open(filename);
     if (datafile.fail())

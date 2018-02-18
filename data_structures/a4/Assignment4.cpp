@@ -22,33 +22,41 @@ int main(int argc, char * argv[])
 { 
     int command;
     CommunicationNetwork a;
-    a.buildNetwork();
     while(true)
     {
         int command=mainmenu();
+        string prev;
+        string name;
         if(command==1)
         {
-            
+            a.buildNetwork();
+            a.printNetworkl(); 
         }
         if(command==2)
         {
-
+            a.printNetwork();
         }
         if(command==3)
         {
-
+            a.transmitMsg(argv[1]);
         }
         if(command==4)
         {
-
+            cout<< "Enter a City name:"<< endl;
+            getline(cin,name);
+            cout<<"Enter a Previous city name:"<< endl;
+            getline(cin,prev);
+            a.addCity(prev, name);
         }
         if(command==5)
         {
-
+            cout<< "Enter the name of a City"<< endl;
+            getline(cin,name);
+            a.deleteCIty(name);
         }
         if(command==6)
         {
-            
+           a.deleteNetwork();
         }
         if(command==7)
         {
