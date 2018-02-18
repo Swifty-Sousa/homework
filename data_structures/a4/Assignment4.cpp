@@ -14,7 +14,6 @@ int mainmenu()
     cout<< "6. Clear Network"<< endl;
     cout<< "7. Quit"<< endl;
     int command;
-    cout<< " Enter a command"<< endl;
     cin>> command;
     return  command;
 }
@@ -30,7 +29,7 @@ int main(int argc, char * argv[])
         if(command==1)
         {
             a.buildNetwork();
-            a.printNetworkl(); 
+            a.printNetwork(); 
         }
         if(command==2)
         {
@@ -42,17 +41,17 @@ int main(int argc, char * argv[])
         }
         if(command==4)
         {
-            cout<< "Enter a City name:"<< endl;
-            getline(cin,name);
-            cout<<"Enter a Previous city name:"<< endl;
-            getline(cin,prev);
-            a.addCity(prev, name);
+            cout<< "Enter a city name:"<< endl;
+            cin>>name;
+            cout<<"Enter a previous city name:"<< endl;
+            cin>>prev;
+            a.addCity(name, prev);
         }
         if(command==5)
         {
-            cout<< "Enter the name of a City"<< endl;
-            getline(cin,name);
-            a.deleteCIty(name);
+            cout<< "Enter a city name:"<< endl;
+            cin>>name;
+            a.deleteCity(name);
         }
         if(command==6)
         {
@@ -61,6 +60,7 @@ int main(int argc, char * argv[])
         if(command==7)
         {
             cout<< "Goodbye!"<< endl;
+            return 0;
         }
 
     }

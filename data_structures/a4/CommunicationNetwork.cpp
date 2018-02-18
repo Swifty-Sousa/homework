@@ -12,7 +12,7 @@ CommunicationNetwork::~CommunicationNetwork()
     deleteNetwork();
 }
 // this is the deconstructor I have made
-void CommunicationNetwork::addCity(string prev, string cityn)
+void CommunicationNetwork::addCity(string cityn, string prev)
 {
     City *newc= new City(cityn, NULL, NULL, "");
     City *temp=head;
@@ -27,21 +27,21 @@ void CommunicationNetwork::addCity(string prev, string cityn)
         newc->previous=tail;
         tail=newc;
     }
+    else if(prev=="First")
+    {
+        head->previous=newc;
+        newc->next=head;
+        head=newc;
+    }
     else
     {
         while(temp!=NULL)
         {
-            if(temp==tail)
+            if(temp->cityName==prev)
             {
-                tail->next=newc;
-                newc->previous=tail;
-                tail=newc;
-            }
-            else
-            {
-                temp->next->previous=newc;
                 newc->next=temp->next;
                 newc->previous=temp;
+                temp->next->previous=newc;
                 temp->next=newc;
                 break;
             }
