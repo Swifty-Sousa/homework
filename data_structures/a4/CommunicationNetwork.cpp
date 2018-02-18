@@ -9,7 +9,7 @@ CommunicationNetwork::CommunicationNetwork(){}
 // this is the default constructor
 CommunicationNetwork::~CommunicationNetwork()
 {
-
+    deleteNetwork();
 }
 // this is the deconstructor I have made
 void CommunicationNetwork::addCity(string prev, string cityn)
@@ -137,5 +137,13 @@ void CommunicationNetwork::deleteCity(string target)
 }
 void CommunicationNetwork::deleteNetwork()
 {
-
+    City *temp=head;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+        cout<<"deleting "<< temp->previous->cityName<< endl;
+        deleteCity(temp->previous->cityName);
+    }
+    cout<< "deleting "<< temp->cityName<< endl;
+    deleteCity(temp->cityName);
 }
