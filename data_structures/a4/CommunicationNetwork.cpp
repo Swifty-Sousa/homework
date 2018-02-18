@@ -100,7 +100,40 @@ void CommunicationNetwork::printNetwork()
 }
 void CommunicationNetwork::deleteCity(string target)
 {
-    
+   bool found=false;
+   City *temp=head;
+   while(temp!=NULL) 
+   {
+       if(temp->cityName==target && temp->previous==NULL)
+       {
+           head=temp->next;
+           temp->next->previous=NULL;
+           delete temp;
+           found=true;
+           break;
+       }
+       else if(temp->cityName==target&& temp->next==NULL)
+       {
+           tail=temp->previous;
+           temp->previous->next=NULL;
+           delete temp;
+           found=true;
+           break;
+       }
+       else if(temp->cityName==target)
+       {
+          temp->previous->next=temp->next;
+          temp->next->previous=temp->previous;
+          delete temp;
+          found=true;
+          break;
+       }
+       temp=temp->next;
+   }
+   if(found==false)
+   {
+       cout<< target<< " not found"<< endl;
+   }
 }
 void CommunicationNetwork::deleteNetwork()
 {
