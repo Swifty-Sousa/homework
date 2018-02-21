@@ -1,0 +1,10 @@
+// Author: Christian Sousa
+// CSCI 2270 Data Structures: section 104
+
+for this section we are writing psudocode to delete a node in a liked list;;the linked list form the documentation is:
+3->5->1->10->2 //  we are asked to delete the node at position 4
+1  2  3  4   5 // these numbers shows the number of the positios
+so to start the program:
+    - create a new node (I Will refer to this node at "temp");
+    - set temp equal to the head node;
+    - 
