@@ -39,7 +39,7 @@ void Queue::printQueue()
         cout<< "Empty"<< endl;
         return;
     }
-    if(queueIsFull())
+    if(queueIsFull()) // this method was explained to me by kevin Yang
     {
         int i=queueHead;
         do{
