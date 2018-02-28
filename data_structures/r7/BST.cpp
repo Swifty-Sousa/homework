@@ -80,7 +80,7 @@ Think about in what order should you destroy.
                 cout<< "failed: Value not found"<< endl;
                 break;
             }
-            temp=->right;
+            temp=temp->right;
         }
     }
     return -1;
