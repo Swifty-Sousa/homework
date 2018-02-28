@@ -3,42 +3,52 @@
 #include<iostream>
 #include"Queue.h"
 using namespace std;
-void mainmenu()
+int mainmenu()
 {
     int x;
-    cout<< "======Main Menu======"<<endl;
-    cout<< "1. Enqueue Word"<< endl;
-    cout<< "2. Dequeue Word"<< endl;
+    cout<< "======Main Menu====="<<endl;
+    cout<< "1. Enqueue word"<< endl;
+    cout<< "2. Dequeue word"<< endl;
     cout<< "3. Print queue"<< endl;
-    cout<< "4. Enqueue sentance" << endl;
+    cout<< "4. Enqueue sentence" << endl;
     cout<< "5. Quit"<< endl;
     cin>>x;
+    return x;
 }
 int main(void)
 {
+    Queue esto(10);
     int command;
+    string word;
     while(true)
     {
        command=mainmenu();
        if(command==1)
        {
-
+        cout<< "word: ";
+        cin>> word;
+        esto.enqueue(word);
        }
-       if(command==2)
+       else if(command==2)
        {
-
+        esto.dequeue();
        }
-       if(command==3)
+       else if(command==3)
        {
-           
+        esto.printQueue();   
        }
-       if(command==4)
+       else if(command==4)
        {
-
+           string sentence;
+        cout<< "sentence: ";
+        getchar();
+        getline(cin,sentence);
+        esto.enqueueSentence(sentence);
        }
-       if(command==5)
+       else if(command==5)
        {
            cout<< "Goodbye!"<< endl;
+           return 0;
        }
     }
 

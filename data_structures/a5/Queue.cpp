@@ -8,11 +8,11 @@ Queue::Queue(int num)
     queueHead=0;//index for the beginning of the Queue
     queueTail=0;// index for the tail of the queue
     queueCount=0;// count of current items in the Queue
-    string *arrayQueue= new string[num];
+    arrayQueue= new string[num];
 }
 Queue::~Queue()
 {
-    delete arrayQueue;
+    delete []arrayQueue;
     arrayQueue=NULL;
 }
 bool Queue::queueIsEmpty()
