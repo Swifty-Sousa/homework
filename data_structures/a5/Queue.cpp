@@ -1,13 +1,14 @@
 #include"Queue.h"
 #include<iostream>
-
+#include<sstream>
+using namespace std;
 Queue::Queue(int num)
 {
     queueSize=num;//  maximum size of the Queue
     queueHead=0;//index for the beginning of the Queue
     queueTail=0;// index for the tail of the queue
     queueCount=0;// count of current items in the Queue
-    arrayQueue= new string[num];
+    string *arrayQueue= new string[num];
 }
 Queue::~Queue()
 {
@@ -38,21 +39,29 @@ void Queue::printQueue()
         cout<< "Empty"<< endl;
         return;
     }
-    if(queueHead==queueTail)
+    if(queueIsFull())
     {
-        cout<<queueHead<<": "<< arrayQueue[queueHead]<< endl;
+        int i=queueHead;
+        do{
+            cout<<i<< ": "<< arrayQueue[i]<< endl;
+            i++;
+            if(i==queueCount)
+            {
+                i=0;
+            }            
+        }while(i!=queueTail);
+        return;
     }
     int temp=queueHead;
     while(temp!=queueTail)
     {
         cout<< temp<< ": "<<arrayQueue[temp]<< endl;
-        if(temp>=queueCount)
+        temp++;
+        if(temp==queueSize)
         {
             temp=0;
         }
-        temp++;
     }
-
 }
 int increment(int a, int b)
 {
@@ -85,7 +94,18 @@ void Queue::enqueue(string word)
     cout<< "T: "<< queueTail<< endl;
 }
 
-
+void Queue::enqueueSentence(string s)
+{
+    string item;
+    stringstream ss(s);
+    ss << s;
+    while(ss.good())
+    {
+        ss >> item;
+        enqueue(item);
+    }
+    
+}
 void Queue::dequeue()
 {
     if(queueIsEmpty())
