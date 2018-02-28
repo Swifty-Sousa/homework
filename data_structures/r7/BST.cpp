@@ -39,7 +39,7 @@ Think about in what order should you destroy.
 **/
  void BST:: destroyNode(node *curNode){
      if(curNode)
-     {
+     
          destroyNode(curNode->left);
          destroyNode(curNode->right);
          delete curNode;
@@ -52,9 +52,38 @@ Think about in what order should you destroy.
     NOTE: As root is a private member of BST class, main function can not access root.
     So we need this helper function.
 **/
- bool BST::searchKeyHelper(node* root, int data){
+ bool BST::searchKeyHelper(node* root, int data)
+ {
      //TODO: Implement your searching function here.
      // Function will return true if the data is there. Else it will return false.
+     node *temp=root;
+    while(true)
+    {
+        if(temp->key==data)
+        {
+            cout<< "Number found"<< endl;
+            return true;
+        }
+        else if(temp->key>data)
+        {
+            if(temp->left==NULL)
+            {
+                cout<<"failed: Value not found"<< endl;
+                break;
+            }
+            temp=temp->left;
+        }
+        else
+        {
+            if(temp->right==NULL)
+            {
+                cout<< "failed: Value not found"<< endl;
+                break;
+            }
+            temp=->right;
+        }
+    }
+    return -1;
  }
 /**
 This function will search the data in the tree
@@ -71,17 +100,16 @@ NOTE: root is a private member of BST. As root is a private member of BST class,
       So we need this helper function. Implement your code for inserting a node in this function.
 **/
  node* BST:: insertNodeHelper(node* curNode, int data)
- {
+{
      //TODO: Implement the code for insert a node at the tree rooted at curNode.
-    if(curNode->key==data)
-    {
-            return curNode;
-    }
-    else if(curNode->key>data)
+    node *in = createNode(data);
+    if(curNode->key>data)
     {
         if(curNode->left==NULL)
         {
-            cout<<"failed: Value not found"<< endl;
+            curNode->left=in;
+            in->parent= curNode;
+            return curNode;
         }
         curNode=curNode->left;
         insertNodeHelper(curNode,data);
@@ -90,7 +118,9 @@ NOTE: root is a private member of BST. As root is a private member of BST class,
     {
         if(curNode->right==NULL)
         {
-            cout<< "failed: Value not found"<< endl;
+            curNode->right=in;
+            in->parent=curNode;
+            return curNode;
         }
         curNode=curNode->right;
         insertNodeHelper(curNode, data);
@@ -101,7 +131,8 @@ NOTE: root is a private member of BST. As root is a private member of BST class,
 This function will insert the data in the tree. As this function can not access the root
 it will call the insertNodeHelper function.
 **/
-void BST:: insertNode( int data){
+void BST:: insertNode( int data)
+{
     if(root == NULL) // if the BST is empty create the root
         root = createNode(data);
     else // insert the data in the tree rooted at root
@@ -113,15 +144,15 @@ printTree() function will call this function.
 NOTE: As root is a private member of BST class, main function can not access root. So printTree will
 call this helper function.
 **/
- void BST:: printTreeHelper(node* curNode)
- {
+void BST:: printTreeHelper(node* curNode)
+{
      if(curNode)
      {
             printTreeHelper( curNode->left);
             cout << " "<< curNode->key;
             printTreeHelper( curNode->right);
      }
- }
+}
 
  void BST:: printTree(){
      printTreeHelper(root);
