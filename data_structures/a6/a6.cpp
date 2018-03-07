@@ -3,26 +3,63 @@
 #include<iostream>
 #include"MovieTree.hpp"
 using namespace std;
+// implemntaitons of class fuctions.
 MovieTree::MovieTree()
 {
     root= NULL;
 }
 MovieTree::~MovieTree()
 {
+    DeleteAll(root);
 }
 void MovieTree::printMovieInventory()
 {
 
 }
+int countLLelements(movieNodeLL * temp)
+{
+    int count=0;
+    while(temp->Next !=NULL)
+    {
+        count++;
+    }
+    return count;
+}
+int summ(*MovieNodeBST star)
+{
+    return (countLLelements(star->leftchild)+ countLLelements(star->rightchild))
+}
 int MovieTree::countMovieNodes()
 {
+    int count;`
+    * MovieNodeBST temp= treeMinimum(root);
+    temp=temp->parent;
+    while(true)
+    {
+        cout+=summ(temp);
+        if(temp==root)
+        {
+            break;
+        }
+        temp=temp->parent;
+    }
+    // at this point we summed the right left side and 
+    //the root so now for the right side
+    while(temp->rightchild!=NULL)
+    {
+        temp=temp->rightchild;
+    }
+    // now we are at the bottom right
+    temp=temp->parent;
+    while(temp!=root)
+    {
+        count+= summ(temp);
+        temp=temp->parent;
+    }
+    return count;
 
 } 
-
-
-
-
-// might niot need this im not sure yet.
+// might not need this im not sure yet.
 void deleteLL(MovieNodeBST * head)
 {
     * MovieNodeBST temp = head;
@@ -71,14 +108,30 @@ void MovieTree::countMovieNodes(MovieNodeBST * , int *c)
 {
 
 }
-* MovieNodeBST MovieTree::searchBST(MovieNodeLL * head, string title)
+* MovieNodeBST MovieTree::searchLL(MovieNodeLL * head, string target)
 {
-
+    MovieNodeLL *temp= head;
+    while(temp->next == NULL)
+    {
+        if(temp->title==target)
+        {
+            return temp;
+        }
+        temp=temp->next;
+    }
+    return NULL;
 }
 * MovieNodeBST MovieTree::treeMinimum(MovieNodeBST * rnode)
 {
-
+    while(rnode->leftchild!=NULL)
+    {
+        rnode=rnode->leftchild;
+    }
+    return rnode;
 }
+
+
+// below is the main menu for coderunner to take in.
 int menu()
 {
     int command;
@@ -101,7 +154,7 @@ int main(void)
         command=menu();
         if(command==1)
         {
-            << "Enter title"<<endl;
+            cout << "Enter title"<<endl;
         }
         else if(command==2)
         {
@@ -113,7 +166,7 @@ int main(void)
         }
         else if(command==4)
         {
-            "Enter title"<< endl;
+            cout<<"Enter title"<< endl;
         }
         else if(command==5)
         {
