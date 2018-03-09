@@ -1,8 +1,7 @@
-//Author: Christian F. Sousa
-// CSCI 2270 Data Structures: section 104
-#include<iostream>
+#include<iostrem>
 #include"MovieTree.hpp"
-using namespace std;
+#include<sstring>
+#include<string>
 // implemntaitons of class fuctions.
 MovieTree::MovieTree()
 {
@@ -16,49 +15,36 @@ void MovieTree::printMovieInventory()
 {
 
 }
-int countLLelements(movieNodeLL * temp)
+int countLLelements(MovieNodeLL * temp)
 {
-    int count=0;
-    while(temp->Next !=NULL)
+    int count =0;
+    while(temp!=NULL)
     {
-        count++;
+        count+=temp->quantity;
+        temp =temp->next;
     }
     return count;
 }
-int summ(*MovieNodeBST star)
-{
-    return (countLLelements(star->leftchild)+ countLLelements(star->rightchild))
-}
-int MovieTree::countMovieNodes()
-{
-    int count;`
-    * MovieNodeBST temp= treeMinimum(root);
-    temp=temp->parent;
-    while(true)
-    {
-        cout+=summ(temp);
-        if(temp==root)
-        {
-            break;
-        }
-        temp=temp->parent;
-    }
-    // at this point we summed the right left side and 
-    //the root so now for the right side
-    while(temp->rightchild!=NULL)
-    {
-        temp=temp->rightchild;
-    }
-    // now we are at the bottom right
-    temp=temp->parent;
-    while(temp!=root)
-    {
-        count+= summ(temp);
-        temp=temp->parent;
-    }
-    return count;
 
-} 
+void MovieTree::countMovieNodes(MovieNodeBST *node, int *c)
+{
+    if(root==NULL)
+    {
+        c=0;
+        return;
+    }
+    else
+    {
+        if(node!=NULL)
+        {
+            c+= countLLelements(node->head);
+            countMovieNodes(node->leftChild, c);
+            countMovieNodes(node->rightChild, c);
+        }
+    }
+
+}
+
 // might not need this im not sure yet.
 void deleteLL(MovieNodeBST * head)
 {
@@ -78,6 +64,7 @@ void deleteLL(MovieNodeBST * head)
 
 void MovieTree::deleteMovieNode(string title)
 {
+    char letter =title[0];
 
 }
 void MovieTree::addMovieNode(int ranking, string title, int ry, int q)
@@ -115,7 +102,7 @@ void MovieTree::countMovieNodes(MovieNodeBST * , int *c)
     {
         if(temp->title==target)
         {
-            return temp;
+    	    return temp;
         }
         temp=temp->next;
     }
@@ -130,52 +117,3 @@ void MovieTree::countMovieNodes(MovieNodeBST * , int *c)
     return rnode;
 }
 
-
-// below is the main menu for coderunner to take in.
-int menu()
-{
-    int command;
-    //couts
-    cout<< "======Main Menu======"<< endl;
-    cout<< "1. Find Movie"<< endl;
-    cout<< "2. Rent Movie"<< endl;
-    cout<< "3. Print the inventory"<< endl;
-    cout<< "4. Delete a movie" << endl;
-    cout<< "5. Count the movies"<< endl;
-    cout<< "6. Quit"<< endl;
-    cin>> command;
-    return command
-
-int main(void)
-{
-    int command;
-    while(true)
-    {
-        command=menu();
-        if(command==1)
-        {
-            cout << "Enter title"<<endl;
-        }
-        else if(command==2)
-        {
-
-        }
-        else if(command==3)
-        {
-
-        }
-        else if(command==4)
-        {
-            cout<<"Enter title"<< endl;
-        }
-        else if(command==5)
-        {
-
-        }
-        else if(command==6)
-        {
-            cout<< "Goodbye!"<< endl;
-            return;
-        }
-    }
-}
