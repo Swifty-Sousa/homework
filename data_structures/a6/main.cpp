@@ -16,38 +16,46 @@ int menu()
     cout<< "5. Count the movies"<< endl;
     cout<< "6. Quit"<< endl;
     cin>> command;
-    return command
+    return command;
+}
 
 int main(void)
 {
+    MovieTree a;
     int command;
+    string title;
     while(true)
     {
         command=menu();
         if(command==1)
         {
             cout << "Enter title"<<endl;
+            getline(cin, title);
+            a.findMovie(title);
         }
         else if(command==2)
         {
-
+            cout<< "Enter Title"<< endl;
+            getline(cin, title);
         }
         else if(command==3)
         {
-
+            a.printMovieInventory();
         }
         else if(command==4)
         {
             cout<<"Enter title"<< endl;
+            getline(cin, title);
+            a.deleteMovieNode(title);
         }
         else if(command==5)
         {
-
+            cout<<"Tree contains: "<<a.countMovieNodes()<< " movies"<< endl;
         }
         else if(command==6)
         {
             cout<< "Goodbye!"<< endl;
-            return;
+            return 0;
         }
     }
 }
