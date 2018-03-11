@@ -64,10 +64,9 @@ void MovieTree::countMovieNodes(MovieNodeBST *node, int *c)
 
 }
 
-// might not need this im not sure yet.
 void deleteLL(MovieNodeBST * head)
 {
-    * MovieNodeBST temp = head;
+    MovieNodeBST* temp = head;
     while(temp!=NULL)
     {
         *MovieNodeBST temp2= temp;
@@ -90,16 +89,17 @@ int deleteBSTnode(MovieNodeBST * node, MovieNodeBST * root,MovieNodeBST * minimu
     // it hurts that we have to account for this.
     if(node==root)
     {
-        if(node->rightChild==NULL && node->leftChild== NULL)
+        //cout<< "node is root"<< endl;
+        if(node->rightChild==NULL && node->leftChild==NULL)
         {
 			delete node;
-            root==NULL;
+            root=NULL;
 			return 0;
         }
 		else if(node->rightChild==NULL && node->leftChild!=NULL)
 		{
 			root=node->leftChild;
-			root->parent==NULL;
+			root->parent=NULL;
 			delete node;
 			return 0;
 		}
@@ -115,6 +115,7 @@ int deleteBSTnode(MovieNodeBST * node, MovieNodeBST * root,MovieNodeBST * minimu
 			if(root->rightChild==minimum)	
 			{
 				root->leftChild->parent=root->rightChild;
+                minimum->leftChild=root->leftChild;
 				root=root->rightChild;
 				root->parent=NULL;
 				delete node;
@@ -141,7 +142,7 @@ int deleteBSTnode(MovieNodeBST * node, MovieNodeBST * root,MovieNodeBST * minimu
 				root->rightChild->parent=minimum;
 				minimum->leftChild=root->leftChild;
 				root->leftChild->parent=minimum;
-				minimum=root;
+				root=minimum;
 				delete node;
 				return 0;
 			}
@@ -203,7 +204,7 @@ int deleteBSTnode(MovieNodeBST * node, MovieNodeBST * root,MovieNodeBST * minimu
     else
     {
         //case one with two children
-        if(node->leftChild==minimum)       
+        if(node->rightChild==minimum)       
         {
             if(node->parent->leftChild=node)
             {
@@ -268,16 +269,28 @@ int deleteBSTnode(MovieNodeBST * node, MovieNodeBST * root,MovieNodeBST * minimu
 void MovieTree::deleteMovieNode(string title)
 {
     MovieNodeBST * holder= searchBST(root, title);
-    MovieNodeBST * minimum= treeMinimum(holder);
+    MovieNodeBST * minimum;
     if(holder==NULL)
     {
         cout<< "Movie not found."<< endl;
         return;
     }
+    if(holder->rightChild==NULL)
+    {
+        minimum=holder;
+    }
+    else if(holder->rightChild!=NULL)
+    {
+        minimum= treeMinimum(holder);
+        //cout<< " I have minimume"<< endl;
+    }
     else if (holder->head->next==NULL)
     {
+        delete holder->head;
         deleteBSTnode(holder, root, minimum);
+        return;
     }
+    //cout<< "line 285"<< endl;
     MovieNodeLL* tail=holder->head;
     MovieNodeLL* tip =tail-> next;
     if(holder->head->title==title)
@@ -286,17 +299,19 @@ void MovieTree::deleteMovieNode(string title)
         delete tail;
         return;
     }
+    //cout<< "line 294"<< endd;
     bool found=false;
     while(tip!=NULL)
     {
         if(tip->title==title)
         {
-            found==true;
+            found=true;
             break;
         }
-        tail==tip;
-        tip==tip->next;
+        tail=tip;
+        tip=tip->next;
     }
+    //cout<< "line 306"<< endl;
     if(!found)
     {
         cout<<"Movie not found." << endl;
@@ -305,6 +320,7 @@ void MovieTree::deleteMovieNode(string title)
     else if(tip->next ==NULL)
     {
         delete tip;
+        tail->next=NULL;
         return;
     }
     else
