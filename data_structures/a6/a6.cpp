@@ -76,7 +76,6 @@ void deleteLL(MovieNodeBST * head)
     }
     delete temp;
 }
-//we will see
 MovieNodeBST * MovieTree::treeMinimum(MovieNodeBST * rnode)
 {
     rnode=rnode->rightChild;
@@ -86,16 +85,15 @@ MovieNodeBST * MovieTree::treeMinimum(MovieNodeBST * rnode)
     }
     return rnode;
 } 
-int deleteBSTnode(MovieNodeBST * node, MovieNodeBST * root)
+int deleteBSTnode(MovieNodeBST * node, MovieNodeBST * root,MovieNodeBST * minimum)
 {
-	// child
-    MovieNodeBST * minimum= treeMinimum(node);
     // it hurts that we have to account for this.
     if(node==root)
     {
         if(node->rightChild==NULL && node->leftChild== NULL)
         {
 			delete node;
+            root==NULL;
 			return 0;
         }
 		else if(node->rightChild==NULL && node->leftChild!=NULL)
@@ -270,6 +268,7 @@ int deleteBSTnode(MovieNodeBST * node, MovieNodeBST * root)
 void MovieTree::deleteMovieNode(string title)
 {
     MovieNodeBST * holder= searchBST(root, title);
+    MovieNodeBST * minimum= treeMinimum(holder);
     if(holder==NULL)
     {
         cout<< "Movie not found."<< endl;
@@ -277,7 +276,7 @@ void MovieTree::deleteMovieNode(string title)
     }
     else if (holder->head->next==NULL)
     {
-        deleteBSTnode(holder, root);
+        deleteBSTnode(holder, root, minimum);
     }
     MovieNodeLL* tail=holder->head;
     MovieNodeLL* tip =tail-> next;
@@ -363,13 +362,44 @@ void MovieTree::rentMovie(string title)
     cout<< "Year:"<<movie->year<< endl;
     cout<< "Quantity:"<< (movie->quantity-1)<< endl; 
 }
+
+void deleteLL(MovieNodeBST * head)
+{
+    * MovieNodeBST temp = head;
+    while(temp!=NULL)
+    {
+        *MovieNodeBST temp2= temp;
+        temp=temp->next;
+        cout<<"Deleting: "<< temp2->title<< endl;
+        delete temp2
+    }
+    cout<<"Deleting: "<< temp->title<< endl;
+    delete temp;
+}
 void MovieTree::DeleteAll(MovieNodeBST * node)
 {
-
+    DeleteAll(node->leftChild);
+    deleteLL(node->head);
+    DeleteAll(node->rightChild);
+    delete node;
+}
+void printLL(MovieNodeLL *head)
+{
+    MovieNodeLL *temp=head;
+    while(temp!=NULL)
+    {
+        cout<< "Movie: "<< temp->title<<" "<< temp->quantity<< endl;
+        temp=temp->next;
+    }
 }
 void MovieTree::printMovieInventory(MovieNodeBST * node)
 {
-
+    if(node!=NULL)
+    {
+        printMovieInventory(node->leftChild);
+        printLL(node->head);
+        printMovieInventory(node->rightChild);
+    }
 }
 MovieNodeBST* MovieTree::searchBST(MovieNodeBST * node, string title)
 {
