@@ -17,6 +17,7 @@ int printmenue()
 }
 int main(int argc, char* argv[])
 {
+    Graph a;
     ifstream datafile;
     datafile.open(argv[1]);
     if(datafile.fail())
@@ -25,14 +26,13 @@ int main(int argc, char* argv[])
     }
     string header;
     getline(datafile,header);
-    vector<string>names;
     stringstream ss(header);
     string s;
     //this for loop starts at one so that 
     // we dont include the word "cities in the vector for city names"
     while(getline(ss,s,','))
     {
-        names.push_back(s);
+        a.addVertex(s);
     }
     int commmand;
     while(true)
