@@ -44,17 +44,17 @@ void Graph::addVertex(string n){
 
     }
 }
-int Graph::isAdjacent(string one, string two) {
-    for (int i = 0; i < vertices.size(); i++) {
-        if (vertices[i].name == one)
-         {
-            if (two== vertices[i + 1].name) 
+int Graph::isAdjacent(string one, string two)
+{
+    for (int i = 0; i < vertices.size(); i++)
+    {
+        if(vertices[i].name == one){
+            for(int j = 0; j < vertices[i].adj.size(); j++)
             {
-                return 1;
-            }
-             else if (two== vertices[i - 1].name) 
-            {
-                return 1;
+                if(vertices[i].adj[j].v->name == two)
+                {
+                    return 1;
+                }
             }
         }
     }
