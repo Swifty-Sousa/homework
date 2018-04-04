@@ -29,8 +29,8 @@ class Graph {
 		void insertVertex(string);	//identifier of the vertex
 		void insertEdge(string,string,int);	//start, end, weight
 		void printGraph();
-		void Graph::DFSpath(string, string);
-		void Graph::findNodeWithMaximumAdjacent(string);
+		void DFSpath(string, string);
+		void findNodeWithMaximumAdjacent(string);
 
 };
 
@@ -91,13 +91,14 @@ void Graph::insertEdge(string v1, string v2, int weight) {
 	}
 }
 
-void Graph::findNodeWithMaximumAdjacent(string start) {
+void Graph::findNodeWithMaximumAdjacent(string start) 
+{
 
-	// Your code here.
 }
 
 
-void Graph::DFSpath(string src, string dst) {
+void Graph::DFSpath(string src, string dst) 
+{
 
 	// Your code here.
 
