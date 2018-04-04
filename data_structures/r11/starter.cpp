@@ -99,9 +99,32 @@ void Graph::findNodeWithMaximumAdjacent(string start)
 
 void Graph::DFSpath(string src, string dst) 
 {
-
-	// Your code here.
-
+	stack<vertex*> s;
+	vertex* start= findVertex(src);
+	vertex* end = findVertex(dst);
+	string arrow ="-->";
+	s.push(start);
+	vertex* holder;
+	while(!s.empty())
+	{
+		holder=s.top();
+		s.pop();
+		if(holder->key==dst)
+		{
+			cout<< holder->key<< endl;
+			break;
+		}
+		holder->visited=true;
+		cout<<holder->key;
+		for(int i=0; i<holder->adjacent.size(); i++)
+		{
+			if(holder->adjacent[i].v->visited)
+			{
+				continue;
+			}
+			s.push(holder->adjacent[i].v);
+		}
+	}
 }
 
 
@@ -126,8 +149,9 @@ int main() {
 	myGraph.insertEdge("E", "B", 0); myGraph.insertEdge("B", "E", 0);
 	myGraph.insertEdge("E", "G", 0); myGraph.insertEdge("G", "E", 0);
 	myGraph.insertEdge("F", "G", 0); myGraph.insertEdge("G", "F", 0);
-
-
+	
+	cout<< "DFS Path from A-F"<<endl;
+	myGraph.DFSpath("A","F");
 
 
 	
