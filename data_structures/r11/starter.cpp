@@ -91,17 +91,81 @@ void Graph::insertEdge(string v1, string v2, int weight) {
 	}
 }
 
-void Graph::findNodeWithMaximumAdjacent(string start) 
+void Graph::findNodeWithMaximumAdjacent(string src) 
 {
-
+	queue<vertex*> s;
+	vertex* start= findVertex(src);
+	s.push(start);
+	vertex* holder;
+	while(!s.empty())
+	{
+		holder=s.front();
+		s.pop();
+		if(holder->visited)
+		{
+			continue;
+		}
+		holder->visited=true;
+		cout<<holder->key;
+		for(int i=0; i<holder->adjacent.size(); i++)
+		{
+			if(holder->adjacent[i].v->visited)
+			{
+				continue;
+			}
+			s.push(holder->adjacent[i].v);
+		}
+	}
+	cout<< endl;
+	for(int i=0; i<vertices.size(); i++)
+	{
+		vertices[i].visited=false;
+	}
+	int max=0;
+	for(int i=0; i< vertices.size(); i++)
+	{
+		if(vertices[i].adjacent.size()>max)
+		{
+			max=vertices[i].adjacent.size();
+		}
+	}
+	for(int i=0; i<vertices.size();i++)
+	{
+		if(vertices[i].adjacent.size()==max)
+		{
+			cout<< vertices[i].key << " ";
+		}		
+	}
+	cout<< endl;
 }
-
 
 void Graph::DFSpath(string src, string dst) 
 {
-
-	// Your code here.
-
+	stack<vertex*> s;
+	vertex* start= findVertex(src);
+	vertex* end = findVertex(dst);
+	s.push(start);
+	vertex* holder;
+	while(!s.empty())
+	{
+		holder=s.top();
+		s.pop();
+		if(holder->key==dst)
+		{
+			cout<< holder->key<< endl;
+			break;
+		}
+		holder->visited=true;
+		cout<<holder->key;
+		for(int i=0; i<holder->adjacent.size(); i++)
+		{
+			if(holder->adjacent[i].v->visited)
+			{
+				continue;
+			}
+			s.push(holder->adjacent[i].v);
+		}
+	}
 }
 
 
@@ -126,8 +190,11 @@ int main() {
 	myGraph.insertEdge("E", "B", 0); myGraph.insertEdge("B", "E", 0);
 	myGraph.insertEdge("E", "G", 0); myGraph.insertEdge("G", "E", 0);
 	myGraph.insertEdge("F", "G", 0); myGraph.insertEdge("G", "F", 0);
+	cout<< "BFS Path from A"<< endl;
+	myGraph.findNodeWithMaximumAdjacent("A");
 
-
+	cout<< "DFS Path from A-F"<<endl;
+	myGraph.DFSpath("A","F");
 
 
 	
