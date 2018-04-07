@@ -59,7 +59,7 @@ class Graph
         vertex * findVertex(std::string name);
         /*
           Call this from within assignDistricts to label the districts.
-          This method should implement a depth first search from the 
+          This method should implement a depth first search fvetrom the 
           startingCity and assign all cities encountered the distID value.
         */
         void DFSLabel(std::string startingCity, int distID);
