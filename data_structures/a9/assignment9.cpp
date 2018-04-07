@@ -20,6 +20,7 @@ int mainmen()
 
 int main(int argc, char* argv[])
 {
+    // remmber to do all the graph creation  before calling main men
     int command= mainmen();
     if(command==1)
     {
