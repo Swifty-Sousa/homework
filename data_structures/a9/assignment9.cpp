@@ -5,6 +5,7 @@
 #include<fstream>
 #include<queue>
 #include<stack>
+#include"Graph.hpp"
 using namespace std;
 int mainmen()
 {
@@ -21,7 +22,16 @@ int mainmen()
 
 int main(int argc, char* argv[])
 {
-    // remmber to do all the graph creation  before calling main men
+    // first we read in the file and create the graph
+    fstream datafile;
+    datafile.open(argv[1]);
+    if(datafile.fail())
+    {
+        cout<< "File: "<< argv[1]<< " not found."<< endl;
+    }
+    string top; // this will be the holder for the first line of the text file
+    getline(datafile,top);
+    stringstream ss(top);
     int command= mainmen();
     if(command==1)
     {
