@@ -2,6 +2,7 @@
 // CSCI 2270  Data structures
 #include<iostream>
 #include<sstream>
+#include<vector>
 #include<fstream>
 #include<queue>
 #include<stack>
@@ -23,6 +24,7 @@ int mainmen()
 int main(int argc, char* argv[])
 {
     // first we read in the file and create the graph
+    Graph dis;
     fstream datafile;
     datafile.open(argv[1]);
     if(datafile.fail())
@@ -32,6 +34,41 @@ int main(int argc, char* argv[])
     string top; // this will be the holder for the first line of the text file
     getline(datafile,top);
     stringstream ss(top);
+    vector<string>names;
+    while(getline(ss,top,','))
+    {
+        names.push_back(top);
+    }
+    for(int i=1;i<name.size();i++)
+    {
+        dis.addVertex(name[i]);
+    }
+    string holder;
+    string s;
+    vector<string> vtemp;
+    int ntemp;
+    while(getline(datafile,holder))
+    {
+        stringstream aa(holder);
+        while(getline(aa,s,','))
+        {
+            vtemp.push_back(s);
+        }
+        for(unsigned int i=1;i<vtemp.size();i++)
+        {
+            ntemp= stoi(vtemp[i]);
+            if(ntemp>0)
+            {
+                dis.addEdge(name[i],vtemp[0],ntemp);
+            }
+        }
+    }
+
+
+    // end of setup
+    // beginning of user interactions
+
+    bool assigned= false;
     int command= mainmen();
     if(command==1)
     {
@@ -39,15 +76,44 @@ int main(int argc, char* argv[])
     }
     if(command==2)
     {
-
+        dis.assignDistricts();
+        assigned=true;
     }
     if(command==3)
     {
+        if(!assigned)
+        {
+            cout<<"Please identify the districts before checking distances"<< enld;
+        }
+        else
+        {
+            string start;
+            string end;
+            cout<< "Enter a starting city:"<< enld;
+            getline(cin,start):
+            cout<< "Enter and ending city:"<< endl;
+            getline(cin,end);
+            dis.shortestPath(start,end);
 
+        }
     }
     if(command==4)
     {
+        if(!assigned)
+        {
+            cout<<"Please identify the districts before checking distances"<< enld;
+        }
+        else
+        {
+            string start;
+            string end;
+            cout<< "Enter a starting city:"<< enld;
+            getline(cin,start):
+            cout<< "Enter and ending city:"<< endl;
+            getline(cin,end);
+            dis.shortestWeightedPath(start,end);
 
+        }
     }
     if(command==5)
     {
