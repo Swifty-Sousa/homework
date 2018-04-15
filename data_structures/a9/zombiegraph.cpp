@@ -5,26 +5,72 @@
 #include<stack>
 #include<queue>
 #include<limits>
+#include<vector>
 
-void Graph::Graph()
+Graph::Graph()
 {
     // defualt contsructor
 }
-void Graph::~Graph()
+Graph::~Graph()
 {
     // Destructor
 }
-void Graph::addEdge(string first, string sec, int weight)
+// taken from given code from a past assignment
+void Graph::addEdge(string v1, string v2, int weight)
 {
-    return;
+    for(int i = 0; i < vertices.size(); i++)
+    {
+        if(vertices[i].name == v1)
+        {
+            for(int j = 0; j < vertices.size(); j++)
+            {
+                if(vertices[j].name == v2 && i != j&& weight>-1)
+                {
+                    adjVertex av;
+                    av.v = &vertices[j];
+                    av.weight = weight;
+                    vertices[i].adj.push_back(av);
+                }
+            }
+        }
+    }
 }
-void Graph::addVertex(string name)
+// taken from given code from past assignment
+void Graph::addVertex(string n)
 {
-    return;
+    bool found = false;
+    for(int i = 0; i < vertices.size(); i++){
+        if(vertices[i].name == n){
+            found = true;
+            cout<<vertices[i].name<<" found."<<endl;
+        }
+    }
+    if(found == false){
+        vertex v;
+        v.name = n;
+        v.districtID=-1;
+        v.unweightedDistance=INT_MAX;
+        v.visited=false;
+        v.parent=NULL;
+        vertices.push_back(v);
+
+    }
 }
 void Graph::displayEdges()
 {
-    return;
+    for(int i=0; i<vertices.size(); i++)
+    {
+        cout<< vertices[i].districtID<< ":"<<vertices[i].name<<"-->";
+        for(int j=0;j<vertices[i].adj.size(); j++)
+        {
+            cout<<vertices[i].adj[j].v->name;
+            if(j!=vertices[i].adj.size()-1)
+            {
+                cout<<"***";
+            }
+        }
+        cout<<endl;
+    }
 }
 
 void Graph::shortestPath(string begin, string endd)
@@ -87,6 +133,7 @@ void Graph::shortestPath(string begin, string endd)
         //cout<<temp->name<<endl;
         p.push_back(temp);
         temp=temp->parent;
+        cout<<temp->name<<endl;
     }
     cout<<end->unweightedDistance<< ", "<<start->name<<", ";
     for(int i=p.size()-1; i>=0;i--)

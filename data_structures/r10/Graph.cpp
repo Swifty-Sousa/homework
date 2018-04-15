@@ -23,11 +23,6 @@ void Graph::addEdge(string v1, string v2, int weight){
                     av.v = &vertices[j];
                     av.weight = weight;
                     vertices[i].adj.push_back(av);
-                    //another vertex for edge in other direction
-                    /*adjVertex av2;
-                    av2.v = &vertices[i];
-                    av2.weight = weight;
-                    vertices[j].adj.push_back(av2);*/
                 }
             }
         }
