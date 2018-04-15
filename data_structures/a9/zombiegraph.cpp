@@ -75,14 +75,16 @@ void Graph::displayEdges()
 
 void Graph::shortestPath(string begin, string endd)
 {
+    //cout<< "one"<< endl;
     // this is a standard BFS
     // loop below sets everything to zero and visited to false
     // as to not get issues with running this multiple times with 
     // the same graph.
-    for(unsigned int i=0; i<vertices.size(); i++)
+    for(int i=0; i<vertices.size(); i++)
     {
         vertices[i].visited=false;
         vertices[i].unweightedDistance=INT_MAX;
+        vertices[i].parent=NULL;
     }
 	vertex * start= findVertex(begin);
 	vertex * end= findVertex(endd);
@@ -100,6 +102,7 @@ void Graph::shortestPath(string begin, string endd)
     q.push(start);
     start->unweightedDistance=0;
     vertex * holder;
+    //cout<< "two"<< endl;
     while(!q.empty())
     {
         holder=q.front();
@@ -109,7 +112,7 @@ void Graph::shortestPath(string begin, string endd)
             continue;
         }
         holder->visited=true;
-        for(unsigned int i=0; i<holder->adj.size();i++)
+        for(int i=0; i<holder->adj.size();i++)
         {
             if(!holder->adj[i].v->visited)
             {
@@ -128,13 +131,15 @@ void Graph::shortestPath(string begin, string endd)
     vector<vertex*>p;
     vertex * temp=end;
     //cout<< "end = "<< end->name<< endl;
+    //cout<< "three"<< endl;
     while(temp->parent!=NULL)
     {
         //cout<<temp->name<<endl;
         p.push_back(temp);
         temp=temp->parent;
-        cout<<temp->name<<endl;
+        //cout<<temp->name<<endl;
     }
+    //cout<< "four"<< endl;
     cout<<end->unweightedDistance<< ", "<<start->name<<", ";
     for(int i=p.size()-1; i>=0;i--)
     {
@@ -148,6 +153,7 @@ void Graph::shortestPath(string begin, string endd)
 }
 void Graph::shortestWeightedPath(string begin, string endd)
 {
+    //cout<< "hello"<< endl;
     // this is a standard BFS
     // loop below sets everything to zero and visited to false
     // as to not get issues with running this multiple times with 
@@ -156,7 +162,9 @@ void Graph::shortestWeightedPath(string begin, string endd)
     {
         vertices[i].visited=false;
         vertices[i].weightedDistance=INT_MAX;
+        vertices[i].parent=NULL;
     }
+    //cout<< "what is life"<< endl;
 	vertex * start= findVertex(begin);
 	vertex * end= findVertex(endd);
     if(start==NULL || end==NULL)
@@ -178,6 +186,7 @@ void Graph::shortestWeightedPath(string begin, string endd)
     q.push(start);
     start->weightedDistance=0;
     vertex * holder;
+    //cout<< "one"<< endl;
     while(!q.empty())
     {
         holder=q.front();
@@ -206,6 +215,7 @@ void Graph::shortestWeightedPath(string begin, string endd)
     vector<vertex*>p;
     vertex * temp=end;
     //cout<< "end = "<< end->name<< endl;
+    //cout<< "two"<< endl;
     while(temp->parent!=NULL)
     {
         //cout<<temp->name<<endl;

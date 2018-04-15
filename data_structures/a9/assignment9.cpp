@@ -37,11 +37,7 @@ int main(int argc, char* argv[])
     vector<string>names;
     while(getline(ss,top,','))
     {
-        names.push_back(top);
-    }
-    for(int i=1;i<name.size();i++)
-    {
-        dis.addVertex(name[i]);
+        dis.addVertex(ss);
     }
     string holder;
     string s;
@@ -68,11 +64,10 @@ int main(int argc, char* argv[])
     // end of setup
     // beginning of user interactions
 
-    bool assigned= false;
     int command= mainmen();
     if(command==1)
     {
-
+        dis.displayEdges();
     }
     if(command==2)
     {
@@ -81,10 +76,6 @@ int main(int argc, char* argv[])
     }
     if(command==3)
     {
-        if(!assigned)
-        {
-            cout<<"Please identify the districts before checking distances"<< enld;
-        }
         else
         {
             string start;
@@ -99,10 +90,6 @@ int main(int argc, char* argv[])
     }
     if(command==4)
     {
-        if(!assigned)
-        {
-            cout<<"Please identify the districts before checking distances"<< enld;
-        }
         else
         {
             string start;
@@ -112,7 +99,6 @@ int main(int argc, char* argv[])
             cout<< "Enter and ending city:"<< endl;
             getline(cin,end);
             dis.shortestWeightedPath(start,end);
-
         }
     }
     if(command==5)
