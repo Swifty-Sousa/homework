@@ -13,10 +13,15 @@ struct item
     item(stirng na, int s, int )
 }
 // reutrns true if the object is removable, false if it gets put into the objcts array;
-void sell()
+void sell(item buyer, item seller, int pos, item objects[])
 {
-    // fuciton prints the objects sold and removes the things from the array.
-    // fuction will also do the array shifting.
+    cout<<seller->name<< " "<< seller->price<< endl; 
+    objects[pos]==NULL; 
+    // now do the array shifting so that there are no holes in the array
+    for(int i=pos; i<98; i++)
+    {
+        objects[i]=objects[i+1];
+    }
 }
 bool process(string line, item objects[], int pos);
 {
@@ -44,15 +49,16 @@ bool process(string line, item objects[], int pos);
     {
         if(objcts[i]->name==a->name)
         {
-            // next level
+            //objects have the same name
             if(objects[i]->status+a->status==3)
             {
-                // next level
+                // one object is for sale the other is wanted.
                 if(objects[i]->status==1)
                 {
                     if(objects[i]->price>=a->price)
                     {
-                        sell(); 
+                        //checking prices match
+                        sell(objects[i],a, i,objects[]); 
                         return true;
                     }
                 }
@@ -60,15 +66,16 @@ bool process(string line, item objects[], int pos);
                 {
                     if(a->price>=objects[i])
                     {
-                        sell()
+                        //checking price matches
+                        sell(a, objects[i],i,objects[]);
                         return true;
                     }
                 }
             }
         }
     }
-    return false;
 
+    return false;
 }
 int main(int argc, char * argv[])
 {
@@ -93,13 +100,13 @@ int main(int argc, char * argv[])
     int i=0;
     while(getline(datafile,line))
     {
-        if(process(line, objects[], i))
+        if(!process(line, objects[], i))
         {
-            // handle the case where transaction is made
+            i++;
         }
         else
         {
-            //handle the case where it gets shoved into the objects array.
+            i--;
         }
     }
 }
